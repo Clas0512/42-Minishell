@@ -34,25 +34,14 @@ int is_valid_dollar(s_lex *info, int i)
 
 int word_control_1(s_lex *info, int i)
 {
-    if ((info->d_q % 2 == 0) && (info->s_q % 2 == 0) && (str[i] != ' ') &&
+	char *str;
+
+	str = info->main_str;
+    if ((((info->d_q % 2 == 0) && (info->s_q % 2 == 0))) && (str[i] != ' ') &&
             (str[i + 1] == '\0' || str[i + 1] == ' ' ||
             is_rdrct(info->main_str, i + 1)))
         return (1);
     return (0);
-}
-
-void    quotes_counter(s_lex *info, int i)
-{
-    if (str[i] == 39)
-    {
-        info->last_quotes = 39;
-        info->s_q++;
-    }
-    if (str[i] == 34)
-    {
-        info->last_quotes = 34;
-        info->d_q++;
-    }
 }
 
 void    word_counter(s_lex *info)
@@ -66,18 +55,17 @@ void    word_counter(s_lex *info)
     i = 0;
     while (str[i] != '\0')
     {
-        quotes_counter(info, i);
+        quotes_current_count(info, i);
         //if (is_valid_dollar(info, i))
         //    info->word_count++;
         //printf("%d - %ld\n", is_rdrct(info->main_str, &i + 1), i);
         if (word_control_1(info, i))
         {
-            
 			printf("!q %c %d\n", str[i], i);
 			if (is_rdrct(info->main_str, i) == 2)
 				i++;
 			info->word_count++;
-			if ((str[i] == 34 && str[i - 1] == 34) || (str[i] == 39 && str[i - 1] == 39))
+			if ((str[i] == 34 && str[i - 1] == 34 && (i > 1 && str[i - 2] == 32)) || (str[i] == 39 && str[i - 1] == 39))
 			{
 				printf("!Q %c %d\n", str[i], i);
 				info->word_count--;

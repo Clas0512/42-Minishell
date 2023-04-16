@@ -1,20 +1,18 @@
 #include "minishell.h"
 
-void    quotes_counter(s_lex *info)
+void    quotes_current_count(s_lex *info, int i)
 {
-    long    i;
-    char    *str;
+	char *str;
 
-    str = info->main_str;
-    i = 0;
-    info->s_q = 0;
-    info->d_q = 0;
-    while (str[i] != '\0')
+	str = info->main_str;
+    if (str[i] == 39)
     {
-        if (str[i] == 39)
-            info->s_q++;
-        if (str[i] == 34)
-            info->d_q++;
-        i++;
+        info->last_quotes = 39;
+        info->s_q++;
+    }
+    if (str[i] == 34)
+    {
+        info->last_quotes = 34;
+        info->d_q++;
     }
 }

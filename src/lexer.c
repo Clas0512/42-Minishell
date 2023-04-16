@@ -6,34 +6,39 @@ void    init_struct(s_lex *info, char *str)
     info->main_str = str;
     info->strlen = ft_strlen(str);
 	info->sgn_lst = malloc(sizeof(int) * info->strlen);
-    quotes_counter(info);
+    //quotes_current_count(info, i);
     printf("single quotes count = %ld\n", info->s_q);
     printf("double quotes count = %ld\n", info->d_q);
 }
 
 size_t letter_counter(s_lex *info)
 {
-    size_t i;
+    static size_t i;
     size_t length;
-    int signd;
+    static size_t j;
     char *str;
 
-    signd = 0;
+	length = 0;
     str = info->main_str;
-    length = 0;
-    i = 0;
-    if (word_control_1(info, i))
-    {
-        length = i;
-        while (i >= 0)
-        {
-            quotes_counter(info, i);
-            if (info->s_q >= 1 || info->d_q >= 1)
-                
-            length -= 2;
-        }
-        i++;
-    }
+	while (str[j] == 32 && i < info->word_count)
+		j++;
+	while (!word_control_1(info, j))
+	{
+		quotes_current_count(info, j);
+		//printf("counting letter -- ' %c '\n", str[j]);
+		j++;
+		length++;
+	}
+	if (info->s_q >= 1 || info->d_q >= 1)
+	{
+		if (info->last_quotes == 34)
+			length -= info->d_q;
+		else
+			length -= info->s_q;
+	}
+	j++;
+	i++;
+	//printf("length of word %zu is -> %zu\n", i, length);
     return (length);
 }
 
@@ -41,14 +46,14 @@ char **lexer(char *str)
 {
     s_lex *info;
     char **line;
-    int i;
+    size_t i;
 
     info = malloc(sizeof(s_lex) * 2);
     init_struct(info, str);
     word_counter(info);
     line = malloc(sizeof(char *) * info->word_count + 1);
     i = 0;
-    while (line[i] != '\0')
+    while (i < info->word_count)
     {
         line[i] = malloc(sizeof(char) * letter_counter(info) + 1);
         i++;

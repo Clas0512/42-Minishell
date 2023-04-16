@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /Users/clas0512/Desktop/42/minishell-main-main/CombinedShell/lib/readline
+prefix = /Users/anargul/Desktop/asd/lib/readline
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/clas0512/Desktop/42/minishell-main-main/CombinedShell/lib/readline
+BUILD_DIR = /Users/anargul/Desktop/asd/lib/readline
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

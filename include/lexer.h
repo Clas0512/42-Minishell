@@ -9,14 +9,15 @@ typedef struct t_lex
     long    s_q;
     char    last_quotes;
     long    strlen;
-    long    word_count;
+    size_t    word_count;
 }			s_lex;
 
-void    quotes_counter(s_lex *info);
+void    quotes_current_count(s_lex *info, int i);
 void    word_counter(s_lex *info);
 void    init_struct(s_lex *info, char *str);
 char    **lexer(char *str);
 int     is_rdrct(char *str, int i);
 int     is_valid_dollar(s_lex *info, int i);
+int		word_control_1(s_lex *info, int i);
 
 #endif

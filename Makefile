@@ -57,6 +57,8 @@ fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(OBJ_DIR)
 	@make -C libft/ fclean
+	
+ffclean:
 	@make -C lib/ fclean
 
 re: fclean all
