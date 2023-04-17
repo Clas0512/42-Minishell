@@ -11,6 +11,49 @@ void	print_env()
 		i++;
 	}
 }
+
+char *get_env(char *env)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	while (shell.environments[i])
+	{
+		if (ft_strncmp(shell.environments[i], env, ft_strlen(env)) == 0)
+		{
+			tmp = ft_strdup(shell.environments[i]);
+			return (tmp);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+//set_env
+//sets the environment variable to the shell.environments
+void	set_env(char *env)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	while (shell.environments[i])
+	{
+		if (ft_strncmp(shell.environments[i], env, ft_strlen(env)) == 0)
+		{
+			tmp = ft_strdup(env);
+			free(shell.environments[i]);
+			shell.environments[i] = tmp;
+			return ;
+		}
+		i++;
+	}
+	shell.environments[i] = ft_strdup(env);
+}
+
 //extend global**
 //init getenv
 //Initializes the environment variables to struct

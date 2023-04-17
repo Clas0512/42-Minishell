@@ -10,4 +10,18 @@ void	handle_signal(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+ 	else if (sig == EOF)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	} 
+	else if (sig == SIGQUIT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }

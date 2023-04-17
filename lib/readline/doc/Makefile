@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /Users/anargul/Desktop/asd/lib/readline
+prefix = /Users/Ventum/Desktop/CombinedShell/lib/readline
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/anargul/Desktop/asd/lib/readline
+BUILD_DIR = /Users/Ventum/Desktop/CombinedShell/lib/readline
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

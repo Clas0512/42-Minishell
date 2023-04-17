@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+//Printing entra $ in echo fix that later
+
 void	checknewline(int n)
 {
 	if (n == 0)
@@ -36,6 +38,8 @@ int	env_checker(char *envname)
 	char 	**envtmp;
 
 	i = 0;
+	if(envname[0] == '$' && ft_isalnum(envname[1]) != 0)
+		envname++;
 	envtmp = shell.environments;
 	while (envtmp[i] != NULL)
 	{
@@ -49,6 +53,13 @@ int	env_checker(char *envname)
 	return (0);
 }
 
+/* need to fix according to this bullshit :
+
+╭─    ~/Desktop/CombinedShell ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── ✔  00:01:56  ─╮
+╰─ echo dsfgdfs$PATH                                                                                                                                                                            ─╯
+dsfgdfs/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
+also $ + '\0' doesnt works rn */ //adem gonna do it // fix according to parse and lex
+
 void	echo(int ac, char **av)
 {
 	int	i;
@@ -57,7 +68,7 @@ void	echo(int ac, char **av)
 
 	i = 0;
 	n = 0;
-	while (i++ < ac)
+	while (i++ <= ac)
 	{
 		j = 0;
 		while (av[i] && av[i][j] != '\0')
@@ -67,9 +78,11 @@ void	echo(int ac, char **av)
 				n = 1;
 				break ;
 			}
-			else if ((av[i][j] == '$' && av[i][j + 1] == '\0') ||
-			(av[i][j] == '$' && env_checker(av[i]) == 0) ||
-			(av[i][j] == '$' && white_checker(av[i][j], av[i][j + 1]) == 0))
+			else if ((av[i][j] == '$' && env_checker(av[i]) == 1))
+				break;
+			else if ((av[i][j] == '$' && av[i][j + 1] != '\0') || (av[i][j] == '$' && env_checker(av[i]) == 0))
+				printf("\n");
+			else if (av[i][j] == '$' && av[i][j + 1] == '\0')
 				printf("$");
 			else if (white_checker(av[i][j], av[i][j + 1]) == 0)
 				printf("%c", av[i][j]);

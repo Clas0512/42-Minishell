@@ -47,14 +47,8 @@ void lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
 //signals
 void	handle_signal(int sig);
 
-//env
-
-//main
-//int	main(int argc, char **argv, char **env);
-
 //built-in's
 void	echo(int ac, char **av);
-void	cd(char **path);
 void 	pwd();
 void	export(char **newenvname);
 void	unset_env(char *unsettling);
@@ -62,5 +56,10 @@ void	init_env();
 void	print_env();
 void	exit_minishell(char **exitargs);
 
+char	*get_pwd(void);
+void	set_env(char *env);
+ void	changenewpwd();
+void	change_dir(char **cdargs);
+char	*get_env(char *env); 
 
 #endif

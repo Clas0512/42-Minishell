@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /Users/anargul/Desktop/asd/lib/readline
+BUILD_DIR = /Users/Ventum/Desktop/CombinedShell/lib/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -49,10 +49,10 @@ LN = ln
 
 SHELL = /bin/sh
 
-host_os = darwin19.6.0
+host_os = darwin22.3.0
 host_vendor = apple
 
-prefix = /Users/anargul/Desktop/asd/lib/readline
+prefix = /Users/Ventum/Desktop/CombinedShell/lib/readline
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin
