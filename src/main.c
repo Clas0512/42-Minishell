@@ -14,7 +14,7 @@ int	main(int ac, char *av[], char *env[])
 	char	**linefornow;
 	if (ft_strncmp(av[0], "./minishell", 11) == 0)
 	{
-		system("open -a Terminal ./minishell"); //fix the aesthetics, fix the path for each computer
+		system("open -a Terminal ./minishell"); //fix the aesthetics, fixed the path for each computer
 		exit(0);
 	}
 	(void)ac;
