@@ -10,8 +10,8 @@ t_shell shell;
 int	main(int ac, char *av[], char *env[])
 {
 	char	*line;
-	char	*cwdr;
 	char	**linefornow;
+	char	*cwdr;
 	if (ft_strncmp(av[0], "./minishell", 11) == 0)
 	{
 		system("open -a Terminal ./minishell"); //fix the aesthetics, fixed the path for each computer
@@ -27,9 +27,9 @@ int	main(int ac, char *av[], char *env[])
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	signal(EOF, handle_signal);
-	cwdr = ft_strjoin(get_pwd(), " | minishell> ");
 	while (true)
 	{
+		cwdr = ft_strjoin(get_pwd(), " | minishell> ");
 		line = readline(cwdr);
 		linefornow = ft_split(line, ' ');
 		add_history(line);

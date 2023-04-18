@@ -31,7 +31,7 @@ typedef struct s_lexer
 
 typedef struct s_shell
 {
-	char **environments;
+	char 		**environments;
 	t_commander commander;
 	t_collector collector;
 }	t_shell;
