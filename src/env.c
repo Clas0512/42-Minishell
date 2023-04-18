@@ -12,7 +12,7 @@ void	print_env()
 	}
 }
 
-char *get_env(char *env) //mallocla
+char *get_env(char *env)
 {
 	int		i;
 	int		j;

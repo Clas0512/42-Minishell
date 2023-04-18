@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-//when cd is called this function will change the shell.enviroment's PWD with the new directory and the OLDPWD with the previous directory
 void	changenewpwd()
 {
 	char	*tmp;

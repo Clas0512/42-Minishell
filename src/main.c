@@ -1,5 +1,14 @@
 #include "minishell.h"
 //add cwdr etc. to global variable for the aesthetics.
+//FIX THE WILDCARDS IN MAKEFILE!!!!!!
+//FIX THE AESTHETICS OF THE EXIT COMMAND
+//Refactor
+//Add the other commands
+//Add the bonus
+//Add the leaks to collector
+//Check the norm
+//Check the leaks
+//Move the files to the right folders and change the makefile
 t_shell shell;
 
 int	main(int ac, char *av[], char *env[])
@@ -15,7 +24,7 @@ int	main(int ac, char *av[], char *env[])
 	(void)ac;
 	(void)av;
 	(void)env;
-	init_env(); //order is changing in seperate terminal, check whh
+	init_env(); //order is changing in seperate terminal, check why
 	init_collector(&shell.collector);
 	init_commander(&shell.commander);
 	signal(SIGINT, handle_signal);
