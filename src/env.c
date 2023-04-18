@@ -15,15 +15,23 @@ void	print_env()
 char *get_env(char *env)
 {
 	int		i;
+	int		j;
 	char	*tmp;
 
 	i = 0;
+	j = ft_strlen(env);
 	tmp = NULL;
 	while (shell.environments[i])
 	{
 		if (ft_strncmp(shell.environments[i], env, ft_strlen(env)) == 0)
 		{
 			tmp = ft_strdup(shell.environments[i]);
+			i = 0;
+			while (tmp[i] != '\0')
+			{
+				tmp[i] = tmp[i + j];
+				i++;
+			}
 			return (tmp);
 		}
 		i++;

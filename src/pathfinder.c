@@ -53,7 +53,7 @@ int	ifexecist(char *exec_name)
 }
 
 //execute with execve and fork - Check the return value of execve and print the error message accordingly
-int	execute(char **args)
+/* int	execute(char **args)
 {
 	pid_t	pid;
 	int		status;
@@ -83,3 +83,4 @@ int	execute(char **args)
 	}
 	return (1);
 }
+ */

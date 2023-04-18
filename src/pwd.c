@@ -3,15 +3,22 @@
 void	pwd()
 {
 	int		i;
+	int 	j;
 	char 	**envtmp;
 
 	i = 0;
+	j = 0;
 	envtmp = shell.environments;
 	while (envtmp[i] != NULL)
 	{
 		if (ft_strncmp(envtmp[i], "PWD=", 4) == 0)
 		{
-			printf("%s \n", envtmp[i]);
+			while (envtmp[i][j + 4] != '\0')
+			{
+				printf("%c", envtmp[i][j + 4]);
+				j++;
+			}
+			printf("\n");
 			return ;
 		}
 		i++;

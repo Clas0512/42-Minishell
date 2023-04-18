@@ -3,7 +3,7 @@
 //add to collector
 
 //export command for shell with no options
-void	export(char **newenvname)
+void	export_env(char **newenvname)
 {
 	t_shell tempenv;
 	int		i;

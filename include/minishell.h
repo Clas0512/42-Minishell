@@ -50,11 +50,11 @@ void	handle_signal(int sig);
 //built-in's
 void	echo(int ac, char **av);
 void 	pwd();
-void	export(char **newenvname);
-void	unset_env(char *unsettling);
+void	unset_env(char **unsettling);
 void	init_env();
 void	print_env();
 void	exit_minishell(char **exitargs);
+void	export_env(char **newenvname);
 
 char	*get_pwd(void);
 void	set_env(char *env);

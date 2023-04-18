@@ -1,105 +1,73 @@
 #include "minishell.h"
 
-//when cd is called this function will change the current working directory and the PWD and OLDPWD environment variables
+//when cd is called this function will change the shell.enviroment's PWD with the new directory and the OLDPWD with the previous directory
 void	changenewpwd()
 {
-	char	*pwd;
-	char	*oldpwd;
 	char	*tmp;
+	char	*tmp2;
 
-	pwd = NULL;
-	oldpwd = NULL;
 	tmp = NULL;
-	pwd = get_pwd();
-	oldpwd = get_env("PWD");
-	tmp = ft_strjoin("OLDPWD=", oldpwd);
-	set_env(tmp);
+	tmp2 = NULL;
+	tmp = get_env("PWD=");
+	tmp2 = getcwd(NULL, 0);
+	set_env(ft_strjoin("PWD=", tmp2));
+	set_env(ft_strjoin("OLDPWD=", tmp));
 	free(tmp);
-	tmp = ft_strjoin("PWD=", pwd);
-	set_env(tmp);
-	free(tmp);
-	free(pwd);
-	free(oldpwd);
+	free(tmp2);
 }
 
-//will change the current working directory
 void	change_dir(char **cdargs)
 {
 	char	*tmp;
 
 	tmp = NULL;
-	if (cdargs[1] == NULL)
+	write(1, "this works1\n", 12);
+	if (ft_strncmp(cdargs[0], "cd", 2) == 0)
 	{
-		tmp = get_env("HOME");
-		if (tmp == NULL)
+		write(1, "this works2\n", 12);
+		if (cdargs[1] == NULL)
 		{
-			printf("minishell: cd: HOME not set\n");
-			return ;
-		}
-		chdir(tmp);
-		free(tmp);
-	}
-	else if (cdargs[1] != NULL)
-	{
-		if (ft_strncmp(cdargs[1], "-", 1) == 0)
-		{
-			tmp = get_env("OLDPWD");
-			if (tmp == NULL)
-			{
-				printf("minishell: cd: OLDPWD not set\n");
-				return ;
-			}
-			chdir(tmp);
+			tmp = get_env("HOME=");
+			printf("%s\n", tmp);
+			if (chdir(tmp) == -1)
+				printf("minishell: cd: %s: No such file or directory\n", tmp);
+			else
+				changenewpwd();
 			free(tmp);
 		}
-		else if (ft_strncmp(cdargs[1], "~", 1) == 0)
+		else if (cdargs[2] != NULL)
+			printf("minishell: cd: too many arguments\n");
+		else if (cdargs[1][0] == '~')
 		{
-			tmp = get_env("HOME");
-			if (tmp == NULL)
-			{
-				printf("minishell: cd: HOME not set\n");
-				return ;
-			}
-			chdir(tmp);
+			tmp = get_env("HOME=");
+			if (chdir(tmp) == -1)
+				printf("minishell: cd: %s: No such file or directory\n", tmp);
+			else
+				changenewpwd();
 			free(tmp);
 		}
-		else if (ft_strncmp(cdargs[1], "/", 1) == 0)
+		else if (cdargs[1][0] == '-')
+		{
+			tmp = get_env("OLDPWD=");
+			if (chdir(tmp) == -1)
+				printf("minishell: cd: %s: No such file or directory\n", tmp);
+			else
+				changenewpwd();
+			free(tmp);
+		}
+		else if (cdargs[1][0] == '.' && cdargs[1][1] == '.')
 		{
 			if (chdir(cdargs[1]) == -1)
-			{
 				printf("minishell: cd: %s: No such file or directory\n", cdargs[1]);
-				return ;
-			}
+			else
+				changenewpwd();
+			free(tmp);
 		}
-		else if (ft_strncmp(cdargs[1], ".", 1) == 0)
-		{
-			if (chdir(cdargs[1]) == -1)
-			{
-				printf("minishell: cd: %s: No such file or directory\n", cdargs[1]);
-				return ;
-			}
-		}
-		else if (ft_strncmp(cdargs[1], "..", 2) == 0)
-		{
-			if (chdir(cdargs[1]) == -1)
-			{
-				printf("minishell: cd: %s: No such file or directory\n", cdargs[1]);
-				return ;
-			}
-		}
+		else if (chdir(cdargs[1]) == -1)
+			printf("minishell: cd: %s: No such file or directory\n", cdargs[1]);
 		else
 		{
-			if (chdir(cdargs[1]) == -1)
-			{
-				printf("minishell: cd: %s: No such file or directory\n", cdargs[1]);
-				return ;
-			}
+			changenewpwd();
 		}
 	}
-	else if (cdargs[2] != NULL)
-	{
-		printf("minishell: cd: too many arguments\n");
-		return ;
-	}
-	changenewpwd();
 }
