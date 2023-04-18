@@ -27,11 +27,12 @@ char *get_env(char *env)
 		{
 			tmp = ft_strdup(shell.environments[i]);
 			i = 0;
-			while (tmp[i] != '\0')
+			while (tmp[i] != '\0' && tmp[i + j] != '\0')
 			{
 				tmp[i] = tmp[i + j];
 				i++;
 			}
+			tmp[i + j] = '\0';
 			return (tmp);
 		}
 		i++;
@@ -41,7 +42,8 @@ char *get_env(char *env)
 
 //set_env
 //sets the environment variable to the shell.environments
-void	set_env(char *env)
+//why the f*ck i did added the last line?
+void	set_env(char *env, char *str)
 {
 	int		i;
 	char	*tmp;
@@ -52,14 +54,16 @@ void	set_env(char *env)
 	{
 		if (ft_strncmp(shell.environments[i], env, ft_strlen(env)) == 0)
 		{
-			tmp = ft_strdup(env);
+			printf("found %s\n", shell.environments[i]);
+			tmp = ft_strjoin(env, str);
 			free(shell.environments[i]);
 			shell.environments[i] = tmp;
+//			printf("found %s\n", shell.environments[i]);
 			return ;
 		}
 		i++;
 	}
-	shell.environments[i] = ft_strdup(env);
+	//shell.environments[i] = ft_strdup(env);
 }
 
 //extend global**

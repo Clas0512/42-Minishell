@@ -24,7 +24,7 @@ LFT = -L libft -lft
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 READLINE_FLAGS = -lreadline 
 RL_FLAGS = -L./lib/readline/lib
 RL_INCS = -I./lib/readline/include

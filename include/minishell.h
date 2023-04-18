@@ -57,7 +57,7 @@ void	exit_minishell(char **exitargs);
 void	export_env(char **newenvname);
 
 char	*get_pwd(void);
-void	set_env(char *env);
+void	set_env(char *env, char *str);
  void	changenewpwd();
 void	change_dir(char **cdargs);
 char	*get_env(char *env); 

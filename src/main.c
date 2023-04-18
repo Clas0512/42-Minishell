@@ -29,8 +29,13 @@ int	main(int ac, char *av[], char *env[])
 	signal(EOF, handle_signal);
 	while (true)
 	{
-		cwdr = ft_strjoin(get_pwd(), " | minishell> ");
+		cwdr = ft_strjoin(getcwd(NULL, 0), " | minishell> ");
 		line = readline(cwdr);
+		if (line == NULL)
+		{
+			printf("%s exit", cwdr);
+			exit(0);
+		}
 		linefornow = ft_split(line, ' ');
 		add_history(line);
 		if (ft_strncmp(line, "exit", 4) == 0)
@@ -46,11 +51,12 @@ int	main(int ac, char *av[], char *env[])
 		else if (ft_strncmp(line, "export", 6) == 0)
 			export_env(linefornow);//works for now
  		else if (ft_strncmp(line, "cd", 2) == 0)
-			change_dir(linefornow); //Gonna fix this later//fixed cd .. but the rest is not working yet
+			change_dir(linefornow); //works for now
 		else
 			printf("%s: command not found\n", line);
 		free(line);
 		free(linefornow);
+		free(cwdr);
 	}
 	return (0);
 }
