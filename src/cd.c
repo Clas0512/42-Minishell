@@ -10,8 +10,6 @@ void	changenewpwd()
 	tmp2 = NULL;
 	tmp = get_env("PWD=");
 	tmp2 = getcwd(NULL, 0);
-	printf("PWD: %s\n", tmp2);
-	printf("OLDPWD: %s\n", tmp);
 	set_env("PWD=", tmp2);
 	set_env("OLDPWD=", tmp);
 	free(tmp);
@@ -25,7 +23,7 @@ void	change_dir(char **cdargs)
 	tmp = NULL;
 	if (ft_strncmp(cdargs[0], "cd", 2) == 0)
 	{
-		if (cdargs[1] == NULL)//works fine
+		if (cdargs[1] == NULL)
 		{
 			tmp = get_env("HOME=");
 			if (chdir(tmp) == -1)
@@ -36,7 +34,7 @@ void	change_dir(char **cdargs)
 		}
 		else if (cdargs[2] != NULL)
 			printf("minishell: cd: too many arguments\n");
-		else if (cdargs[1][0] == '~')//doesnt change the shell.environments PWD but changes pwd
+		else if (cdargs[1][0] == '~')
 		{
 			tmp = get_env("HOME=");
 			if (chdir(tmp) == -1)
@@ -45,7 +43,7 @@ void	change_dir(char **cdargs)
 				changenewpwd();
 			free(tmp);
 		}
-		else if (cdargs[1][0] == '-')//works fine
+		else if (cdargs[1][0] == '-')
 		{
 			tmp = get_env("OLDPWD=");
 			if (chdir(tmp) == -1)
@@ -64,7 +62,7 @@ void	change_dir(char **cdargs)
 		}
 		else if (chdir(cdargs[1]) == -1)
 			printf("minishell: cd: %s: No such file or directory\n", cdargs[1]);
-		else//doesnt change the shell.environments PWD but changes pwd
+		else
 			changenewpwd();
 	}
 }
