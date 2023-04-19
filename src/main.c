@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:33:41 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:33:06 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	main(int ac, char *av[], char *env[])
 	(void)ac;
 	(void)av;
 	(void)env;
-	init_env(); //order is changing in seperate terminal, check why
-	init_collector(&shell.collector);
-	init_commander(&shell.commander);
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
-	signal(EOF, handle_signal);
+	initEnv(); //order is changing in seperate terminal, check why
+	initCollector(&shell.collector);
+	initCommander(&shell.commander);
+	signal(SIGINT, handleSignal);
+	signal(SIGQUIT, handleSignal);
+	signal(EOF, handleSignal);
 	while (true)
 	{
 		cwdr = ft_strjoin(getcwd(NULL, 0), " | minishell> ");
@@ -54,19 +54,19 @@ int	main(int ac, char *av[], char *env[])
 		linefornow = ft_split(line, ' ');
 		add_history(line);
 		if (ft_strncmp(line, "exit", 4) == 0)
-			exit_minishell(linefornow);//works for now but should fix the aesthetics
+			exitMinishell(linefornow);//works for now but should fix the aesthetics
 		else if (ft_strncmp(line, "echo", 4) == 0 || ft_strncmp(line, "ECHO", 4) == 0)
 			echo(ac, linefornow);
 		else if (ft_strncmp(line, "pwd", 3) == 0)
 			pwd();
 		else if (ft_strncmp(line, "env", 3) == 0 || ft_strncmp(line, "ENV", 3) == 0)
-			print_env();
+			printEnv();
  		else if (ft_strncmp(line, "unset", 5) == 0)
-			unset_env(linefornow);
+			unsetEnv(linefornow);
 		else if (ft_strncmp(line, "export", 6) == 0)
-			export_env(linefornow);
+			exportEnv(linefornow);
  		else if (ft_strncmp(line, "cd", 2) == 0)
-			change_dir(linefornow);
+			changeDirectory(linefornow);
 		else
 			printf("%s: command not found\n", line);
 		free(line);

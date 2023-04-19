@@ -20,7 +20,7 @@ typedef struct s_commander
 	t_command	*tail;
 }	t_commander;
 
-void init_commander(t_commander *commander);
+void initCommander(t_commander *commander);
 //t_command *create_command(t_commander *commander, t_string *lexed);
 void add_command(t_commander *commander, t_command *new);
 

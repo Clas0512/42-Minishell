@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:34:02 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:34:03 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:29:32 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_env(char **unsettling)
+void	unsetEnv(char **unsettling)
 {
 	int		i;
 	int		j;

@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/Ventum/Desktop/CombinedShell/lib/readline
+BUILD_DIR = /Users/Ventum/Desktop/ShellyByRuzgar/lib/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /Users/Ventum/Desktop/CombinedShell/lib/readline
+prefix = /Users/Ventum/Desktop/ShellyByRuzgar/lib/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

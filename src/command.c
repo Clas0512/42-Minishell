@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:17 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:40:53 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:23:25 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void init_commander(t_commander *commander)
+void initCommander(t_commander *commander)
 {
 	commander->head = NULL;
 	commander->tail = NULL;

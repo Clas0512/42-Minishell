@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:31 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:52:49 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:20:20 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //just use a temp ** and change it to shell.environments
 
 //export command for shell with no options
-void	export_env(char **newenvname)
+void	exportEnv(char **newenvname)
 {
 	t_shell	tempenv;
 	int		i;

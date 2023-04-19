@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:37:34 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:30:59 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_var(char *var_name)
+char	*getEnvVar(char *var_name)
 {
 	int		i;
 	char	*var;
@@ -32,7 +32,7 @@ char	*get_env_var(char *var_name)
 	return (NULL);
 }
 
-char	*getfullpath(char *path, char *c, char *exec_name)
+char	*getFullPath(char *path, char *c, char *exec_name)
 {
 	char	*semi_path;
 	char	*full_path;
@@ -42,7 +42,7 @@ char	*getfullpath(char *path, char *c, char *exec_name)
 	return (full_path);
 }
 
-int	ifexecist(char *exec_name)
+int	ifExecist(char *exec_name)
 {
 	char	*path;
 	char	*full_path;
@@ -50,7 +50,7 @@ int	ifexecist(char *exec_name)
 	char	**path_list;
 	int		i;
 
-	path_var = get_env_var("PATH");
+	path_var = getEnvVar("PATH");
 	if (!path_var)
 		return (-1);
 	path_list = ft_split(path_var, ':');
@@ -58,7 +58,7 @@ int	ifexecist(char *exec_name)
 	while (path_list[i] && path_list[i] != NULL)
 	{
 		path = path_list[i];
-		full_path = getfullpath(path, "/", exec_name);
+		full_path = getFullPath(path, "/", exec_name);
 		if (access(full_path, F_OK) == 0 && access(full_path, X_OK) == 0)
 			return (1);
 		i++;

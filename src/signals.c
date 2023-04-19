@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:33:56 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:25:59 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_signal(int sig)
+void	handleSignal(int sig)
 {
 	if (sig == SIGINT)
 	{

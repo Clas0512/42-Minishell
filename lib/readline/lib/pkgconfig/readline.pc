@@ -1,4 +1,4 @@
-prefix=/Users/Ventum/Desktop/CombinedShell/lib/readline
+prefix=/Users/Ventum/Desktop/ShellyByRuzgar/lib/readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

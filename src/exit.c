@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:28 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/18 22:40:22 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/19 23:23:52 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_minishell(char **exitargs)
+void	exitMinishell(char **exitargs)
 {
 	int	i;
 
