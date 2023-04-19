@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/18 22:42:43 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 //Printing entra $ in echo fix that later
@@ -11,12 +23,12 @@ void	checknewline(int n)
 int	env_checker(char *envname)
 {
 	int		i;
-	int 	j;
-	char 	**envtmp;
+	int		j;
+	char	**envtmp;
 
 	i = 0;
 	j = ft_strlen(envname);
-	if(envname[0] == '$' && ft_isalnum(envname[1]) != 0)
+	if (envname[0] == '$' && ft_isalnum(envname[1]) != 0)
 		envname++;
 	envtmp = shell.environments;
 	while (envtmp[i] != NULL)
@@ -54,10 +66,10 @@ void	echo(int ac, char **av)
 				break ;
 			}
 			else if ((av[i][j] == '$' && env_checker(av[i]) == 1))
-				break;
+				break ;
 			else if (av[i][0] == '$' && av[i][1] == '\0')
 				printf("$");
-			else if (av[i][j] == '$' &&  env_checker(av[i]) == 0)
+			else if (av[i][j] == '$' && env_checker(av[i]) == 0)
 			{
 				printf("\n");
 				break ;

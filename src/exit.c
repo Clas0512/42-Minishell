@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/18 22:33:28 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/18 22:40:22 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	exit_minishell(char **exitargs)
@@ -13,7 +25,8 @@ void	exit_minishell(char **exitargs)
 			printf("exit\n");
 			exit(0);
 		}
-		else if(ft_isdigit(exitargs[1][i]) >= '0' && ft_isdigit(exitargs[1][i]) <= '9')
+		else if (ft_isdigit(exitargs[1][i]) >= '0'
+		&& ft_isdigit(exitargs[1][i]) <= '9')
 		{
 			printf("exit: %s\n", exitargs[1]);
 			printf("exit\n");

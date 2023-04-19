@@ -1,16 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pathfinder.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/18 22:37:34 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_env_var(char *var_name)
 {
 	int		i;
 	char	*var;
+	char	*temp;
 
 	i = 0;
 	while (shell.environments[i])
 	{
-		if (ft_strncmp(shell.environments[i], var_name, ft_strlen(var_name)) == 0)
+		temp = shell.environments[i];
+		if (ft_strncmp(temp, var_name, ft_strlen(var_name)) == 0)
 		{
-			var = ft_substr(shell.environments[i], ft_strlen(var_name) + 1, ft_strlen(shell.environments[i]));
+			var = ft_substr(temp, ft_strlen(var_name) + 1, ft_strlen(temp));
 			return (var);
 		}
 		i++;
@@ -52,7 +66,8 @@ int	ifexecist(char *exec_name)
 	return (0);
 }
 
-//execute with execve and fork - Check the return value of execve and print the error message accordingly
+//execute with execve and fork - 
+//Check the return value of execve and print the error message accordingly
 /* int	execute(char **args)
 {
 	pid_t	pid;
