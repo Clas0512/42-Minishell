@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 02:17:12 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 02:32:35 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@
 // system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. */
 t_shell	shell;
 
-void	read_the_line(char *line, char **linefornow)
+void	read_the_line(char *line, char **linefornow, int ac)
 {
 	if (ft_strncmp(line, "exit", 4) == 0)
 		exit_minishell(linefornow);
 	else if (ft_strncmp(line, "echo", 4) == 0
 		|| ft_strncmp(line, "ECHO", 4) == 0)
-		echo(linefornow);
+		echo(ac, linefornow);
 	else if (ft_strncmp(line, "pwd", 3) == 0)
 		pwd();
 	else if (ft_strncmp(line, "env", 3) == 0 || ft_strncmp(line, "ENV", 3) == 0)
@@ -57,6 +57,14 @@ void	open_terminal(char *av)
 	}
 }
 
+void	init_collection(void)
+{
+	init_env();
+	init_collector(&shell.collector);
+	init_commander(&shell.commander);
+	init_signal();
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
@@ -66,10 +74,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	init_env();
-	init_collector(&shell.collector);
-	init_commander(&shell.commander);
-	init_signal();
+	init_collection();
 	while (true)
 	{
 		shell.cwdr = ft_strjoin(getcwd(NULL, 0), " | minishell> ");
@@ -81,7 +86,7 @@ int	main(int ac, char **av, char **env)
 		}
 		linefornow = ft_split(line, ' ');
 		add_history(line);
-		read_the_line(line, linefornow);
+		read_the_line(line, linefornow, ac);
 		free(line);
 		free(linefornow);
 		free(shell.cwdr);

@@ -50,7 +50,7 @@ void	signal_handler(int sig);
 void	init_signal(void);
 
 //built-in's
-void	echo(char **av);
+void	echo(int ac, char **av);
 void 	pwd();
 void	unset_env(char **unsettling);
 void	init_env();
@@ -65,6 +65,6 @@ void	change_directory(char **cdargs);
 char	*get_env(char *env); 
 
 //promptline
-void	read_the_line(char * line, char ** linefornow);
+void	read_the_line(char * line, char ** linefornow, int ac);
 
 #endif

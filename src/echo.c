@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:56:25 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 02:33:15 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	env_checker(char *envname)
 	return (0);
 }
 
-void	echo(char **av)
+void	echo(int ac, char **av)
 {
 	int	i;
 	int	j;
@@ -55,7 +55,7 @@ void	echo(char **av)
 
 	i = 0;
 	n = 0;
-	while (i++)
+	while (i++ <= ac)
 	{
 		j = 0;
 		while (av[i] && av[i][j] != '\0')
