@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:57:59 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 02:17:12 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,21 @@ void	read_the_line(char *line, char **linefornow)
 		printf("%s: command not found\n", line);
 }
 
+void	open_terminal(char *av)
+{
+	if (ft_strncmp(av, "./minishell", 11) == 0)
+	{
+		system("open -a iTerm ./minishell");
+		exit (0);
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	char	**linefornow;
 
-	if (ft_strncmp(av[0], "./minishell", 11) == 0)
-		system("open -a iTerm ./minishell & sleep 1 && kill -9 $(ps -p $$ -o ppid=)");
+	open_terminal(av[0]);
 	(void)ac;
 	(void)av;
 	(void)env;
