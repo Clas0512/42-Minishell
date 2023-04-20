@@ -32,6 +32,7 @@ typedef struct s_lexer
 typedef struct s_shell
 {
 	char 		**environments;
+	char	*cwdr;
 	t_commander commander;
 	t_collector collector;
 }	t_shell;
@@ -48,7 +49,7 @@ void lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
 void	handleSignal(int sig);
 
 //built-in's
-void	echo(int ac, char **av);
+void	echo(char **av);
 void 	pwd();
 void	unsetEnv(char **unsettling);
 void	initEnv();
@@ -58,8 +59,11 @@ void	exportEnv(char **newenvname);
 
 char	*getPwd(void);
 void	setEnv(char *env, char *str);
- void	changeNewPwd();
+void	changeNewPwd();
 void	changeDirectory(char **cdargs);
 char	*getEnv(char *env); 
+
+//promptline
+void	readTheLine(char * line, char ** linefornow);
 
 #endif
