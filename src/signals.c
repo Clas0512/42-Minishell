@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/19 23:25:59 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:09:48 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handleSignal(int sig)
+void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -35,4 +35,12 @@ void	handleSignal(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+void	init_signal(void)
+{
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	signal(EOF, signal_handler);
+
 }

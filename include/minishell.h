@@ -46,24 +46,25 @@ void lexer_size(char *input, int *i);
 void lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
 
 //signals
-void	handleSignal(int sig);
+void	signal_handler(int sig);
+void	init_signal(void);
 
 //built-in's
 void	echo(char **av);
 void 	pwd();
-void	unsetEnv(char **unsettling);
-void	initEnv();
-void	printEnv();
-void	exitMinishell(char **exitargs);
-void	exportEnv(char **newenvname);
+void	unset_env(char **unsettling);
+void	init_env();
+void	print_env();
+void	exit_minishell(char **exitargs);
+void	export_env(char **newenvname);
 
-char	*getPwd(void);
-void	setEnv(char *env, char *str);
-void	changeNewPwd();
-void	changeDirectory(char **cdargs);
-char	*getEnv(char *env); 
+char	*get_pwd(void);
+void	set_env(char *env, char *str);
+void	change_new_pwd();
+void	change_directory(char **cdargs);
+char	*get_env(char *env); 
 
 //promptline
-void	readTheLine(char * line, char ** linefornow);
+void	read_the_line(char * line, char ** linefornow);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/19 23:30:59 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:11:42 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*getEnvVar(char *var_name)
+char	*get_env_variable(char *var_name)
 {
 	int		i;
 	char	*var;
@@ -32,7 +32,7 @@ char	*getEnvVar(char *var_name)
 	return (NULL);
 }
 
-char	*getFullPath(char *path, char *c, char *exec_name)
+char	*get_full_path(char *path, char *c, char *exec_name)
 {
 	char	*semi_path;
 	char	*full_path;
@@ -42,7 +42,7 @@ char	*getFullPath(char *path, char *c, char *exec_name)
 	return (full_path);
 }
 
-int	ifExecist(char *exec_name)
+int	if_execexist(char *exec_name)
 {
 	char	*path;
 	char	*full_path;
@@ -50,7 +50,7 @@ int	ifExecist(char *exec_name)
 	char	**path_list;
 	int		i;
 
-	path_var = getEnvVar("PATH");
+	path_var = get_env_variable("PATH");
 	if (!path_var)
 		return (-1);
 	path_list = ft_split(path_var, ':');
@@ -58,7 +58,7 @@ int	ifExecist(char *exec_name)
 	while (path_list[i] && path_list[i] != NULL)
 	{
 		path = path_list[i];
-		full_path = getFullPath(path, "/", exec_name);
+		full_path = get_full_path(path, "/", exec_name);
 		if (access(full_path, F_OK) == 0 && access(full_path, X_OK) == 0)
 			return (1);
 		i++;
@@ -78,7 +78,7 @@ int	ifExecist(char *exec_name)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
-			if (ifexecist(args[0]) == 1)
+			if (if_execexist(args[0]) == 1)
 				printf("minishell: permission denied: %s\n", args[0]);
 			else
 				printf("minishell: command not found: %s\n", args[0]);

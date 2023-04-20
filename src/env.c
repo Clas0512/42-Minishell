@@ -6,13 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:24 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/19 23:29:52 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:09:18 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	printEnv()
+void	print_env()
 {
 	int	i;
 
@@ -24,7 +24,7 @@ void	printEnv()
 	}
 }
 
-char *getEnv(char *env)
+char *get_env(char *env)
 {
 	int		i;
 	int		j;
@@ -56,7 +56,7 @@ char *getEnv(char *env)
 	return (NULL);
 }
 
-void	setEnv(char *env, char *str)
+void	set_env(char *env, char *str)
 {
 	int		i;
 	char	*tmp;
@@ -76,7 +76,7 @@ void	setEnv(char *env, char *str)
 	}
 }
 
-void	initEnv(void)
+void	init_env(void)
 {
 	int		i;
 	char	*env;

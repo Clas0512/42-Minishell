@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/20 22:19:00 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:10:21 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //Printing entra $ in echo fix that later
 
-void	checknewline(int n)
+void	check_newline(int n)
 {
 	if (n == 0)
 		printf("\n");
@@ -81,5 +81,5 @@ void	echo(char **av)
 		if ((av[i] && av[i][j] == '\0') && av[i + 1] != NULL)
 			printf(" ");
 	}
-	checknewline(n);
+	check_newline(n);
 }

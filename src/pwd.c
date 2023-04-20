@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:43 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/19 23:31:21 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 00:12:06 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	pwd()
 	}
 }
 
-char	*getPwd()
+char	*get_pwd()
 {
 	int		i;
 	size_t		j;
