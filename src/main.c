@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 19:41:06 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 19:44:19 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 //Check the norm
 //Check the leaks
 //Move the files to the right folders and change the makefile
-// Echo Doesn't prints more than 2 words, i f-ed it up with removing ac, dear future me handle that plox
+// Echo Doesn't prints more than 2 words, i f-ed it up with removing ac, dear future me handle that plox.
+// 																			^^ ^ ^^ don't worry kiddo, i gotcha ;) <3 
 // exit works for now but should fix the aesthetics
 // init_env is not working properly, order is changing while on a new prompt thats called with system call check why
 // system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
