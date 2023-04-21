@@ -52,19 +52,25 @@ void	init_signal(void);
 //built-in's
 void	echo(int ac, char **av);
 void 	pwd();
+void	change_new_pwd();
 void	unset_env(char **unsettling);
 void	init_env();
 void	print_env();
 void	exit_minishell(char **exitargs);
 void	export_env(char **newenvname);
-
 char	*get_pwd(void);
 void	set_env(char *env, char *str);
-void	change_new_pwd();
 void	change_directory(char **cdargs);
 char	*get_env(char *env); 
 
 //promptline
 void	read_the_line(char * line, char ** linefornow, int ac);
+
+//executor
+int	execute(char *exec_name, char **args);
+int		if_execexist(char *exec_name);
+char	*get_full_path(char *path, char *c, char *exec_name);
+char	*get_env_variable(char *var_name);
+
 
 #endif

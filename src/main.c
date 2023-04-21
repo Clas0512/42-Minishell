@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 03:18:18 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 19:41:06 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 // Echo Doesn't prints more than 2 words, i f-ed it up with removing ac, dear future me handle that plox
 // exit works for now but should fix the aesthetics
 // init_env is not working properly, order is changing while on a new prompt thats called with system call check why
-// system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. */
+// system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
+//ADD PATH CONTROL TO EXECUTOR*/
 t_shell	shell;
 
 int	count_words(char **str)
@@ -58,6 +59,8 @@ void	read_the_line(char *line, char **linefornow, int ac)
 		export_env(linefornow);
 	else if (ft_strncmp(line, "cd", 2) == 0)
 		change_directory(linefornow);
+	else if (if_execexist(linefornow[0]) == 1)
+		execute(linefornow[0], linefornow);
 	else
 		printf("%s: command not found\n", line);
 }

@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:17 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:12:42 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 03:27:34 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,3 +47,4 @@ void add_command(t_commander *commander, t_command *new)
 		commander->tail = commander->tail->next;
 	}
 }
+

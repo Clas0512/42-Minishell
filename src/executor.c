@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathfinder.c                                       :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:11:42 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 19:40:49 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//ADD PATH CONTROL
 
 char	*get_env_variable(char *var_name)
 {
@@ -66,36 +68,35 @@ int	if_execexist(char *exec_name)
 	return (0);
 }
 
-//execute with execve and fork - 
-//Check the return value of execve and print the error message accordingly
-/* int	execute(char **args)
+int	execute(char *exec_name, char **args)
 {
 	pid_t	pid;
-	int		status;
+	int		wstatus;
+	int		statuscode;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(args[0], args, NULL) == -1)
+		if (execve(exec_name, args, NULL) == -1)
 		{
-			if (if_execexist(args[0]) == 1)
-				printf("minishell: permission denied: %s\n", args[0]);
-			else
-				printf("minishell: command not found: %s\n", args[0]);
+			if (if_execexist(exec_name) == 1)
+				printf("%s Permission Denied : %s\n", shell.cwdr, exec_name);
 		}
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
-		perror("minishell");
+		perror("Child Process Failed.");
 	}
 	else
 	{
-		do
+		waitpid(pid, &wstatus, WUNTRACED);
+		if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
 		{
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+			statuscode = WEXITSTATUS(wstatus);
+			printf("minishell: %d: %s: %s\n", statuscode, exec_name, strerror(statuscode));
+			return (1);
+		}
 	}
-	return (1);
+	return (0);
 }
- */
