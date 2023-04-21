@@ -24,7 +24,7 @@ LFT = -L libft -lft
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 READLINE_FLAGS = -lreadline 
 RL_FLAGS = -L./lib/readline/lib
 RL_INCS = -I./lib/readline/include
@@ -57,8 +57,8 @@ fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(OBJ_DIR)
 	@make -C libft/ fclean
-	
-ffclean:
+
+ffclean: fclean
 	@make -C lib/ fclean
 
 re: fclean all

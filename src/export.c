@@ -1,16 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/18 22:33:31 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/21 00:07:21 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 // change free's with collector cleaner
 //add to collector
+//just use a temp ** and change it to shell.environments
 
 //export command for shell with no options
-void	export(char **newenvname)
+void	export_env(char **newenvname)
 {
-	t_shell tempenv;
+	t_shell	tempenv;
 	int		i;
 	int		j;
 
 	i = 0;
-	j = 0;
+	j = -1;
 	while (shell.environments[i])
 		i++;
 	tempenv.environments = (char **)malloc(sizeof(char *) * (i + 2));
@@ -22,13 +35,9 @@ void	export(char **newenvname)
 	}
 	tempenv.environments[i] = ft_strdup(newenvname[1]);
 	tempenv.environments[i + 1] = NULL;
-	j = 0;
-	while (shell.environments[j])
-	{
+	while (shell.environments[++j])
 		free(shell.environments[j]);
-		j++;
-	}
-	free (shell.environments);
+	free(shell.environments[j]);
 	shell.environments = (char **)malloc(sizeof(char *) * (i + 2));
 	i = 0;
 	while (tempenv.environments[i])
@@ -37,11 +46,8 @@ void	export(char **newenvname)
 		i++;
 	}
 	shell.environments[i] = NULL;
-	i = 0;
-	while (tempenv.environments[i])
-	{
+	i = -1;
+	while (tempenv.environments[++i])
 		free(tempenv.environments[i]);
-		i++;
-	}
 	free(tempenv.environments);
 }

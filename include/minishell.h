@@ -31,7 +31,8 @@ typedef struct s_lexer
 
 typedef struct s_shell
 {
-	char **environments;
+	char 		**environments;
+	char		*cwdr;
 	t_commander commander;
 	t_collector collector;
 }	t_shell;
@@ -45,22 +46,25 @@ void lexer_size(char *input, int *i);
 void lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
 
 //signals
-void	handle_signal(int sig);
-
-//env
-
-//main
-//int	main(int argc, char **argv, char **env);
+void	signal_handler(int sig);
+void	init_signal(void);
 
 //built-in's
-void	echo(int ac, char **av);
-void	cd(char **path);
+void	echo(char **av);
 void 	pwd();
-void	export(char **newenvname);
-void	unset_env(char *unsettling);
+void	unset_env(char **unsettling);
 void	init_env();
 void	print_env();
 void	exit_minishell(char **exitargs);
+void	export_env(char **newenvname);
 
+char	*get_pwd(void);
+void	set_env(char *env, char *str);
+void	change_new_pwd();
+void	change_directory(char **cdargs);
+char	*get_env(char *env); 
+
+//promptline
+void	read_the_line(char * line, char ** linefornow);
 
 #endif

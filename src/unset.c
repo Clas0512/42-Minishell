@@ -1,22 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/18 22:34:02 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/21 00:07:34 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-//Unsets the environment variable
-void	unset_env(char *unsettling)
+void	unset_env(char **unsettling)
 {
 	int		i;
 	int		j;
 
 	i = 0;
+	j = ft_strlen(unsettling[1]);
 	while (shell.environments[i])
 	{
-		if (ft_strncmp(shell.environments[i], unsettling, ft_strlen(unsettling)) == 0)
+		if (ft_strncmp(shell.environments[i], unsettling[1], j) == 0)
 		{
-			free(shell.environments[i]);
-			j = i;
-			while (shell.environments[j])
+			while (shell.environments[i])
 			{
-				shell.environments[j] = shell.environments[j + 1];
-				j++;
+				shell.environments[i] = shell.environments[i + 1];
+				i++;
 			}
 			return ;
 		}
