@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 02:32:35 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 03:18:18 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,24 @@
 // system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. */
 t_shell	shell;
 
+int	count_words(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != NULL)
+		i++;
+	return (i);
+}
+
+
 void	read_the_line(char *line, char **linefornow, int ac)
 {
+	ac = count_words(linefornow) - 1;
 	if (ft_strncmp(line, "exit", 4) == 0)
 		exit_minishell(linefornow);
+	else if (ft_strncmp(line, "clear", 5) == 0)
+		system("clear");
 	else if (ft_strncmp(line, "echo", 4) == 0
 		|| ft_strncmp(line, "ECHO", 4) == 0)
 		echo(ac, linefornow);
@@ -53,6 +67,7 @@ void	open_terminal(char *av)
 	if (ft_strncmp(av, "./minishell", 11) == 0)
 	{
 		system("open -a iTerm ./minishell");
+		system("clear");
 		exit (0);
 	}
 }
@@ -75,6 +90,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	init_collection();
+	system("clear");
 	while (true)
 	{
 		shell.cwdr = ft_strjoin(getcwd(NULL, 0), " | minishell> ");
