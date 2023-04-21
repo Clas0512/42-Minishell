@@ -6,12 +6,12 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 19:44:19 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 23:10:51 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/* //add cwdr etc. to global variable for the aesthetics.
+/* //add cwdr etc. to global variable for the aesthetics. (Done and Done)
 //FIX THE WILDCARDS IN MAKEFILE!!!!!!
 //FIX THE AESTHETICS OF THE EXIT COMMAND
 //Refactor
@@ -38,7 +38,6 @@ int	count_words(char **str)
 		i++;
 	return (i);
 }
-
 
 void	read_the_line(char *line, char **linefornow, int ac)
 {
@@ -84,7 +83,7 @@ void	init_collection(void)
 	init_signal();
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	char	**linefornow;
@@ -92,7 +91,7 @@ int	main(int ac, char **av, char **env)
 	open_terminal(av[0]);
 	(void)ac;
 	(void)av;
-	(void)env;
+	(void)envp;
 	init_collection();
 	system("clear");
 	while (true)

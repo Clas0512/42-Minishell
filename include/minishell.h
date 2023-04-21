@@ -67,10 +67,10 @@ char	*get_env(char *env);
 void	read_the_line(char * line, char ** linefornow, int ac);
 
 //executor
-int	execute(char *exec_name, char **args);
+int		execute(char *exec_name, char **args);
 int		if_execexist(char *exec_name);
 char	*get_full_path(char *path, char *c, char *exec_name);
 char	*get_env_variable(char *var_name);
-
+char	*return_exec_path(char *exec_name);
 
 #endif
