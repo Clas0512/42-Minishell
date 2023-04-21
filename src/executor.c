@@ -6,13 +6,11 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 23:09:58 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 23:32:54 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//ADD PATH CONTROL
 
 char	*get_env_variable(char *var_name)
 {
