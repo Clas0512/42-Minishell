@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:43 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:12:06 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 22:46:45 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	pwd()
 char	*get_pwd()
 {
 	int		i;
-	size_t		j;
+	int		j;
 	char	**envtmp;
 	char	*pwd;
 

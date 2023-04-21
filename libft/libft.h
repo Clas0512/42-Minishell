@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 07:35:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/03/14 07:37:02 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 22:48:30 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
-size_t	ft_strlen(const char *s);
+int		ft_strlen(const char *s);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);

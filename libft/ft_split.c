@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 06:53:06 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/03/14 06:58:35 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/21 22:46:19 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static char	*word_dup(const char *str, int start, int finish)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 	int		index;
 	char	**split;
 

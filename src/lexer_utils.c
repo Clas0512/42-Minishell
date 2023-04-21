@@ -16,7 +16,7 @@ int    is_rdrct(char *str, int i)
     return (0);
 }
 
-int is_valid_dollar(s_lex *info, int i)
+int is_valid_dollar(t_lex *info, int i)
 {
     char    *str;
 
@@ -28,7 +28,7 @@ int is_valid_dollar(s_lex *info, int i)
     return (0);
 }
 
-int word_control_1(s_lex *info, int i)
+int word_control_1(t_lex *info, int i)
 {
     char *str;
 
@@ -40,7 +40,7 @@ int word_control_1(s_lex *info, int i)
     return (0);
 }
 
-void    invld_quotes_str(s_lex *info)
+void    invld_quotes_str(t_lex *info)
 {
     int  i;
     char *str;
@@ -105,7 +105,7 @@ int    quotes_passer(char *str, int *i, char pvt)
 }
 
 
-void    word_counter1(s_lex *info, char *str)
+void    word_counter1(t_lex *info, char *str)
 {
     int i;
 
@@ -138,5 +138,5 @@ void    word_counter1(s_lex *info, char *str)
             i++;
         }
     }
-    // printf("\nbulunan kelime sayisi = %ld\n", info->word_count);
+    // printf("\nbulunan kelime sayisi = %d\n", info->word_count);
 }

@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-void    quotes_counter(s_lex *info, size_t i)
+void    quotes_counter(t_lex *info, int i)
 {
-    char    *str;
-    size_t  j;
+    char	*str;
+    int		j;
 
     j = 0;
     info->d_q = 0;
