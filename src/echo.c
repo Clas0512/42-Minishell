@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 02:33:15 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:07:28 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	env_checker(char *envname)
 	j = ft_strlen(envname);
 	if (envname[0] == '$' && ft_isalnum(envname[1]) != 0)
 		envname++;
-	envtmp = shell.environments;
+	envtmp = g_shell.environments;
 	while (envtmp[i] != NULL)
 	{
 		if (ft_strncmp(envtmp[i], envname, ft_strlen(envname)) == 0)

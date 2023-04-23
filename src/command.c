@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:17 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 03:27:34 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:37:54 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_command *create_command(t_commander *commander)
 	else
 		new->prev = commander->tail;
 	collection = create_collection(new);
-	add_collection(&shell.collector, collection);
+	add_collection(&g_shell.collector, collection);
 	return (new);
 }
 

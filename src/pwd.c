@@ -6,21 +6,21 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:43 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:12:06 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/22 04:07:28 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd()
+void	pwd(void)
 {
 	int		i;
-	int 	j;
-	char 	**envtmp;
+	int		j;
+	char	**envtmp;
 
 	i = 0;
 	j = 0;
-	envtmp = shell.environments;
+	envtmp = g_shell.environments;
 	while (envtmp[i] != NULL)
 	{
 		if (ft_strncmp(envtmp[i], "PWD=", 4) == 0)
@@ -37,16 +37,16 @@ void	pwd()
 	}
 }
 
-char	*get_pwd()
+char	*get_pwd(void)
 {
 	int		i;
-	size_t		j;
+	size_t	j;
 	char	**envtmp;
 	char	*pwd;
 
 	i = 0;
 	j = 0;
-	envtmp = shell.environments;
+	envtmp = g_shell.environments;
 	while (envtmp[i] != NULL)
 	{
 		if (ft_strncmp(envtmp[i], "PWD=", 4) == 0)

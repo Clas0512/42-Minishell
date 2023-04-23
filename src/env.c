@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:24 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 03:39:17 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/22 23:39:28 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	print_env(void)
 	int	i;
 
 	i = 0;
-	while (shell.environments[i])
+	while (g_shell.environments[i])
 	{
-		printf("%s\n", shell.environments[i]);
+		printf("%s\n", g_shell.environments[i]);
 		i++;
 	}
 }
@@ -33,13 +33,13 @@ char	*get_env(char *env)
 	i = 0;
 	j = ft_strlen(env);
 	tmp = NULL;
-	while (shell.environments[i])
+	while (g_shell.environments[i])
 	{
-		if (ft_strncmp(shell.environments[i], env, ft_strlen(env)) == 0)
+		if (ft_strncmp(g_shell.environments[i], env, j) == 0)
 		{
 			if (ft_strncmp(tmp, "HOME=", 5) == 0)
 			{
-				tmp = ft_substr(shell.environments[i], j, ft_strlen(shell.environments[i]) - j);
+				tmp = ft_substr(g_shell.environments[i], j, ft_strlen(g_shell.environments[i]) - j);
 				return (tmp);
 			}
 			i = 0;
@@ -48,7 +48,7 @@ char	*get_env(char *env)
 				tmp[i] = tmp[i + j];
 				i++;
 			}
-			
+			tmp[i] = '\0';
 			return (tmp);
 		}
 		i++;
@@ -63,13 +63,13 @@ void	set_env(char *env, char *str)
 
 	i = 0;
 	tmp = NULL;
-	while (shell.environments[i])
+	while (g_shell.environments[i])
 	{
-		if (ft_strncmp(shell.environments[i], env, ft_strlen(env)) == 0)
+		if (ft_strncmp(g_shell.environments[i], env, ft_strlen(env)) == 0)
 		{
 			tmp = ft_strjoin(env, str);
-			free(shell.environments[i]);
-			shell.environments[i] = tmp;
+			free(g_shell.environments[i]);
+			g_shell.environments[i] = tmp;
 			return ;
 		}
 		i++;
@@ -78,20 +78,20 @@ void	set_env(char *env, char *str)
 
 void	init_env(void)
 {
-	int		i;
-	char	*env;
-	extern char **environ;
+	int			i;
+	char		*env;
+	extern char	**environ;
 
 	i = 0;
 	while (environ[i])
 		i++;
-	shell.environments = (char **)malloc(sizeof(char *) * (i + 1));
+	g_shell.environments = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (environ[i])
 	{
 		env = ft_strdup(environ[i]);
-		shell.environments[i] = env;
+		g_shell.environments[i] = env;
 		i++;
 	}
-	shell.environments[i] = NULL;
+	g_shell.environments[i] = NULL;
 }

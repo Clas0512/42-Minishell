@@ -30,8 +30,8 @@ Kernel configured for up to 8 processors.
 Processor type: arm64e (ARM64E)
 Processors active: 0 1 2 3 4 5 6 7
 Primary memory available: 8.00 gigabytes
-Default processor set: 484 tasks, 3275 threads, 8 processors
-Load average: 5.00, Mach factor: 5.07
+Default processor set: 399 tasks, 2803 threads, 8 processors
+Load average: 6.44, Mach factor: 4.36
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -1951,7 +1951,7 @@ configure:7074: checking for tgetent
 configure:7074: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_tgetent", referenced from:
-      _main in conftest-52a6b4.o
+      _main in conftest-c26616.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:7074: $? = 1
@@ -2246,7 +2246,7 @@ configure:7421: checking for mbscasecmp
 configure:7421: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_mbscasecmp", referenced from:
-      _main in conftest-6a85c9.o
+      _main in conftest-181586.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:7421: $? = 1
@@ -2386,7 +2386,7 @@ configure:7428: checking for mbscmp
 configure:7428: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_mbscmp", referenced from:
-      _main in conftest-08b369.o
+      _main in conftest-e6736f.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:7428: $? = 1
@@ -2534,7 +2534,7 @@ configure:7450: checking for mbschr
 configure:7450: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_mbschr", referenced from:
-      _main in conftest-f12aef.o
+      _main in conftest-c39a34.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:7450: $? = 1

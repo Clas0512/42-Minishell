@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:09:48 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/22 03:54:09 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	signal_handler(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
- 	else if (sig == EOF)
+	else if (sig == EOF)
 	{
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-	} 
+	}
 	else if (sig == SIGQUIT)
 	{
 		printf("\n");
@@ -42,5 +42,4 @@ void	init_signal(void)
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	signal(EOF, signal_handler);
-
 }
