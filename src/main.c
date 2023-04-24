@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/24 15:02:38 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/25 00:46:36 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 // init_env is not working properly, order is changing while on a new prompt thats called with system call check why
 // system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
 //ADD PATH CONTROL TO EXECUTOR <---- DONE BABYBOY, LOVE YA */
+//Pipe has heap overflow, deal with it, refactor it, make it better, make it work, make it right. And don't forget the Norm <3
+//Check the fuck out get_env, i mean WTF?? ,?_?,
 
 t_shell	g_shell;
 
@@ -51,13 +53,13 @@ void	read_the_line(char *line, char **linefornow, int ac)
 	else if (ft_strncmp(line, "cd", 2) == 0)
 		change_directory(linefornow);
  	else if (pipe_exists(line) > 0)
-		init_pipe(linefornow[0], linefornow);
+		pipe_execute(linefornow);
 	else if (if_execexist(linefornow[0]) == 1)
 		execute(linefornow[0], linefornow);
 	else if (linefornow[0] == NULL)
 		return ;
 	else
-		printf("%sCommand not found\n", g_shell.cwdr);
+		printf("%s%s : Command not found\n", g_shell.cwdr, line);
 }
 
 void	open_terminal(char *av)//change it to execve

@@ -49,7 +49,7 @@ LN = ln
 
 SHELL = /bin/sh
 
-host_os = darwin22.3.0
+host_os = darwin22.4.0
 host_vendor = apple
 
 prefix = /Users/Ventum/Desktop/ShellyByRuzgar/lib/readline

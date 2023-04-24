@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:24 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/22 23:39:28 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/25 00:45:45 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_env(void)
 	}
 }
 
-char	*get_env(char *env)
+char	*get_env(char *env)//WTF?? WHY THE HELL IS OLD PWD IS GETTING BROKEN WHEN I FIX HOME AND WHY THE FUCK EVERYTHING GETS FUCKED UP WHEN I CHANGE TMP TO ANYTHING ELSE IN THAT STRNCMP???? WTF???
 {
 	int		i;
 	int		j;

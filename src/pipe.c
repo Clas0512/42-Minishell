@@ -6,139 +6,118 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/24 15:15:09 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/25 00:23:56 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_exists(char *input)
+int	pipe_exists(char *line)
 {
 	int	i;
-	int	pipe_count;
 
 	i = 0;
-	pipe_count = 0;
-	while (input[i])
+	while (line[i])
 	{
-		if (input[i] == '|')
-			pipe_count++;
+		if (line[i] == '|')
+			return (1);
 		i++;
 	}
-	g_shell.pipe_count = pipe_count;
-	return (pipe_count);
+	return (0);
 }
 
-void	fill_pipeargs(char **pipe_args)
+int	pipe_execute(char **pipeargss)
 {
-	//fills the g_shell.pipeargs array with the pipe_args
+	int		num_pipes;
+	int		pipeargs_idx;
+	int		pipe_idx;
+	int		wstatus;
+	int		start;
+	int		end;
 	int		i;
+	char	**args;
+	pid_t	pid;
 
-	i = 0;
-	while(pipe_args[i])
+	num_pipes = 0;
+	pipeargs_idx = 0;
+	args = NULL;
+	while (pipeargss[pipeargs_idx] != NULL)
 	{
-		i++;
-		g_shell.pipearg_count++;
-	}
-	g_shell.pipeargs = malloc(sizeof(char **) * (i + 1));
-	i = 0;
-	while (pipe_args[i])
-	{
-		g_shell.pipeargs[i] = ft_strdup(pipe_args[i]);
-		i++;
-	}
-	g_shell.pipeargs[i] = NULL;
-}
-
-char	**next_pipe_args()
-{
-	//fills the g_shell.pipeargs array with the pipe_args
-	//each time this function called it returns the current pipe args
-	//then it increments the g_shell.pipeargs pointer to the next pipe args
-	//until it reaches the end of the g_shell.pipeargs array
-	
-	char	**tmp;
-	int		i;
-	
-	i = 0;
-	while(ft_strncmp(g_shell.pipeargs[i], "|", 1) != 0)
-		i++;
-	tmp = malloc (sizeof(char **) * (i + 1));
-	i = 0;
-	while(ft_strncmp(g_shell.pipeargs[i], "|", 1) != 0)
-	{
-		tmp[i] = ft_strdup(g_shell.pipeargs[i]);
-		i++;
-	}
-	tmp[i] = NULL;
-	g_shell.pipearg_count = g_shell.pipearg_count - i;
-	printf("pipearg_count: %d\n", g_shell.pipearg_count);
-	if (g_shell.pipearg_count > 0)
-		g_shell.pipeargs = g_shell.pipeargs + i + 1;
-	return (tmp);
-}
-
-void	init_pipe(char *exec_name, char **pipe_args)
-{
-	(void)exec_name;
-	char **pipe_arg1;
-	char **pipe_arg2;
-	
-	fill_pipeargs(pipe_args);
-	pipe_arg1 = next_pipe_args();
-	pipe_arg2 = next_pipe_args();
-	plumber(pipe_arg1, pipe_arg2);
-}
-
-int	plumber(char **pipe_arg1,char **pipe_arg2)
-{
-	while (g_shell.pipe_count > 0)
-	{
-		int 	fd[2];
-		pid_t 	pid;
-		
-		if (pipe(fd) == -1) 
+		if (ft_strncmp(pipeargss[pipeargs_idx], "|", 1) == 0)
 		{
-			perror("pipe failed");
-			exit(EXIT_FAILURE);
+			num_pipes++;
 		}
-
+		pipeargs_idx++;
+	}
+	int	pipes[num_pipes * 2];
+	i = 0;
+	while (i < num_pipes)
+	{
+		if (pipe(pipes + i * 2) < 0)
+		{
+			perror ("pipe");
+			return (-1);
+		}
+		i++;
+	}
+	start = 0;
+	end = 0;
+	pipe_idx = 0;
+	while (pipeargss[end] != NULL)
+	{//Find the end of the curr comm
+		while (pipeargss[end] != NULL && ft_strncmp(pipeargss[end], "|", 1) != 0)
+			end++;
+		//Set up the args for the curr comm
+		args = malloc(sizeof(char *) * (end - start + 1));
+		i = start;
+		while (i < end)
+		{
+			args[i-start] = pipeargss[i];
+			i++;
+		}
+		args[end-start] = NULL;
 		pid = fork();
-		if (pid < 0) 
-		{
-			perror("fork failed");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0) 
-		{ // child process
-			close(fd[0]); // close read end of the pipe
-			dup2(fd[1], STDOUT_FILENO); // redirect stdout to the write end of the pipe
-			execute(pipe_arg1[0], pipe_arg1); // execute the first command
-			exit(EXIT_FAILURE);
-		}
-		else 
-		{ // parent process
-			close(fd[1]); // close write end of the pipe
-			pid = fork();
-			if (pid < 0) 
+		if (pid < 0)
+			return (-1);
+		else if (pid == 0)
+		{// Childé
+			if (pipe_idx > 0)// Set up input redir from the prev comm
 			{
-				perror("fork failed");
-				exit(EXIT_FAILURE);
+				if (dup2(pipes[(pipe_idx-1)*2], STDIN_FILENO) < 0)
+					return (-1);
 			}
-			else if (pid == 0) 
-			{ // child process
-				dup2(fd[0], STDIN_FILENO); // redirect stdin to the read end of the pipe
-				execute(pipe_arg2[0], pipe_arg2); // execute the second command
-				exit(EXIT_FAILURE);
+			if (pipe_idx < num_pipes)// Set up outp redir to the next comm
+			{
+				if (dup2(pipes[pipe_idx*2+1], STDOUT_FILENO) < 0)
+					return (-1);
 			}
-			else 
-			{// parent process
-				g_shell.pipe_count--;
-				close(fd[0]); // close read end of the pipe
-				close(fd[1]); // close write end of the pipe
-				waitpid(pid, NULL, 0); // wait for the second child process to finish
+			i = 0;
+			while (i < num_pipes * 2)
+			{
+				close (pipes[i]);
+				i++;
 			}
+			if (execute(args[0], args) != 0)
+				exit (EXIT_FAILURE);
+			exit (EXIT_SUCCESS);
 		}
+		else
+		{//Par.proc.
+			if (pipe_idx > 0)//Close the inp end of the prev pipe
+				close(pipes[(pipe_idx-1)*2]);
+			if (pipe_idx < num_pipes)// Close the outp end of the curr pipe
+				close(pipes[pipe_idx*2+1]);
+			if (waitpid(pid, &wstatus, 0) < 0)
+			{
+				perror ("waitpid");
+				return (-1);
+			}
+			if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
+				return (-1);
+		}
+		start = end + 1;
+		end = start;
+		pipe_idx++;
 	}
-    return (0);
+	return (0);
 }
