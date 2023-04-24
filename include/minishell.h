@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/23 14:57:51 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:05:54 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_shell
 	char		**environments;
 	char		*cwdr;
 	int			pipe_count;
+	int			pipearg_count;
+	char		**pipeargs;
 	t_commander	commander;
 	t_collector	collector;
 }	t_shell;
@@ -89,7 +91,7 @@ int		if_execexist(char *exec_name);
 
 //pipe
 void	init_pipe(char *exec_name, char **pipe_args);
-int		plumber(char *exec_name, char **pipe_args);
+int		plumber(char **pipe_arg1,char **pipe_arg2);
 int		pipe_exists(char *input);
 
 #endif

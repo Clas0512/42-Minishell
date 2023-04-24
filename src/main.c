@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/23 15:00:55 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:02:38 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	read_the_line(char *line, char **linefornow, int ac)
 		init_pipe(linefornow[0], linefornow);
 	else if (if_execexist(linefornow[0]) == 1)
 		execute(linefornow[0], linefornow);
+	else if (linefornow[0] == NULL)
+		return ;
 	else
 		printf("%sCommand not found\n", g_shell.cwdr);
 }
