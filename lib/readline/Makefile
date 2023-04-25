@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/anargul/Desktop/asd/lib/readline
+BUILD_DIR = /Users/clas0512/Desktop/güncel2/lib/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /Users/anargul/Desktop/asd/lib/readline
+prefix = /Users/clas0512/Desktop/güncel2/lib/readline
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/18 22:33:46 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/22 04:37:54 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /* #include "minishell.h"
 
 t_shell shell;
@@ -12,7 +24,7 @@ t_redirection *create_redirection(char *name, int flags)
 	new->fd = open(name, flags);
 	new->next = NULL;
 	collection = create_collection(new);
-	add_collection(&shell.collector, collection);
+	add_collection(&g_shell.collector, collection);
 	return (new);
 }
 
