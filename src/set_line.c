@@ -63,6 +63,7 @@ int  setter_in_word(t_lex *info, char *str, char *line)
 void    set_line(t_lex *info, char *str, char **line)
 {
 	int wd;
+	int	wd_past;
 
 	wd = 0;
 	// for (size_t i = 0; line[i] != NULL; i++)
@@ -71,24 +72,29 @@ void    set_line(t_lex *info, char *str, char **line)
 	// }
 	while (wd < info->word_count && str[info->a] != 0)
 	{
+		wd_past = wd;
 		if (str[info->a] == 32)
 			info->a++;
 		else if (str[info->a] == 34 || str[info->a] == 39)
 			// wd += setter_in_quotes(str, line[info->word_count], &i, str[i], &j);
 		{
 			wd += setter_in_quotes(info, str, line[wd], str[info->a]);
-			info->b = 0;
+			// printf("\"%c\" in %d\n", str[info->a], info->a);
+			if (wd_past != wd)
+				info->b = 0;
 		}
 		else if (is_rdrct(str, info->a) > 0)
 		{
 			wd += setter_rdirectn(info, str, line[wd]);
-			info->b = 0;
+			if (wd_past != wd)
+				info->b = 0;
 		}
 		else if (32 < str[info->a] && str[info->a] < 127)
 		{
 			// printf("wd: %d -- char: %c\n", wd, str[info->a]);
 			wd += setter_in_word(info, str, line[wd]);
-			info->b = 0;
+			if (wd_past != wd)
+				info->b = 0;
 		}
 	}
 	// for (int i = 0; i < info->word_count; i++)
