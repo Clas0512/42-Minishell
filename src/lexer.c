@@ -1,5 +1,27 @@
 #include "minishell.h"
 
+void	check_error(t_lex *info, char *str)
+{
+	int		i;
+	char	pvt;
+
+	i = -1;
+	while (str[++i] != '\0')
+	{
+		if (str[i] == 34 || str[i] == 39)
+		{
+			pvt = str[i];
+			i++;
+			while (str[i] != pvt)
+			{
+				if (str[i] == '\0')
+					info->error = 1;
+				return ;
+			}
+		}
+	}
+}
+
 void    init_struct(t_lex *info, char *str)
 {
 	info->main_str = str;
@@ -9,64 +31,9 @@ void    init_struct(t_lex *info, char *str)
 	info->d_q = 0;
 	info->a = 0;
 	info->b = 0;
-}
-
-int is_invalid_str(char *str, int i, int limit)
-{
-	if (i > 0 && i < limit - 1)
-	{
-		if ((str[i - 1] == 32 || is_rdrct(str, i - 1) != 0 || i == 1) && (str[i + 1] == 32 || is_rdrct(str, i + 1) != 0))
-			return (1);
-	}
-	return (0);
-}
-
-int is_merge_quotes(char *str, int i, char pvt)
-{
-	if ((pvt == 34 || pvt == 39) && str[i] != 0 && str[i] == pvt)
-		return (1);
-	return (0);
-}
-
-int is_word_final_basic(char *str, int i)
-{
-	if ((str[i] != 32 && is_rdrct(str, i) == 0 && str[i] != '\0') &&
-		(str[i + 1] == 32 || str[i + 1] == '\0' || is_rdrct(str, i) != 0))
-	{
-		// printf("char in is_word_final_basic : \' %c \' count: %d\n", str[i], i);
-		return (1);
-	}
-	return (0);    
-}
-
-int  letter_counter_in_quotes(char *str, char pvt, int *i)
-{
-	int length;
-
-	length = 0;
-	while (is_merge_quotes(str, *i, pvt))
-		*i += 2;
-	(*i)++;
-	while (str[*i] != pvt)
-	{
-		// printf("zz  %c  zz\n", str[*i]);
-		length++;
-		(*i)++;
-	}
-	if (is_merge_quotes(str, (*i) + 1, pvt))
-	{
-		*i += 2;
-		// printf("HASSSKTR\n");
-		letter_counter_in_quotes(str, pvt, i);
-	}
-	while (str[*i + 1] != 32 && str[*i + 1] != '\0' && is_rdrct(str, *i) == 0)
-	{
-		length++;
-		(*i)++;
-		if (str[*i] == 34 || str[*i] == 39)
-			length += letter_counter_in_quotes(str, str[*i], i);
-	}
-	return (length);
+	info->error = 0;
+	info->error_str = malloc(sizeof(char *) * 2);
+	info->error_str[0] = ft_strdup("ERROR");
 }
 
 void letter_manager(t_lex *info, char *str, char **line)
@@ -134,17 +101,56 @@ void letter_manager(t_lex *info, char *str, char **line)
 	}
 }
 
-// void	printf_control(t_lex *info)
-// {
-// 	printf
-// }
+void    word_manager(t_lex *info, char *str)
+{
+    int i;
+
+    i = 0;
+    while (i < info->strlen && str[i] != '\0')
+    {
+        // printf("*** %d ***\n", info->strlen);
+        // exit(1);
+        // printf("-*- %c -*- detected in %d and word count = %d\n", str[i], i, info->word_count);
+        if (str[i] == 32)
+            i++;
+        else if (str[i] == 34 || str[i] == 39)
+        {
+            // printf("before quotes passer %d\n", i);
+            info->word_count += quotes_passer(str, &i, str[i]);
+            // printf("after quotes passer %d\n", i);
+            if (str[i] == '\0')
+            while (str[i] != 32 && str[i] != '\0' && is_rdrct(str, i) != 0)
+                i++;
+        }
+        else if (is_rdrct(str, i) == 1)
+        {
+            i++;
+            info->word_count++;
+        }
+        else if (is_rdrct(str, i) == 2)
+        {
+            i += 2;
+            info->word_count++;
+        }
+        else
+        {
+            info->word_count += word_passer(str, &i);
+            i++;
+        }
+    }
+    // printf("bulunan kelime sayisi = %d\n", info->word_count);
+}
 
 char **lexer(char *str)
 {
 	t_lex	info;
 
 	init_struct(&info, str);
-	word_counter1(&info, info.main_str);
+	check_error(&info, info.main_str);
+	// printf("info.error = %d\n", info.error);
+	if (info.error == 1)
+		return (info.error_str);
+	word_manager(&info, info.main_str);
 	// printf("%d\n", info.word_count);
 	info.line = ft_calloc(sizeof(char *), (info.word_count + 1));
 	letter_manager(&info, str, info.line);

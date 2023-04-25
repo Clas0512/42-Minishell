@@ -6,7 +6,7 @@
 /*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/25 09:55:01 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/25 17:56:03 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	char	**linefornow;
 
-	open_terminal(av[0]);
+	// open_terminal(av[0]);
 	(void)ac;
 	(void)av;
 	(void)envp;
