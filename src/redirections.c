@@ -6,14 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 05:01:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 17:23:36 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:19:27 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //FIX THE INFILE OUTCOME
 
-//checks to see if the command has a redirection
 int	redirection_exists(char *line)
 {
 	int	i;
@@ -28,7 +27,6 @@ int	redirection_exists(char *line)
 	return (1);
 }
 
-//checks to see if the command is infile, outfile, append or heredoc
 void	redirection_redirector(char **linefornow)
 {
 	int	i;
