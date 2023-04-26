@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 08:38:18 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:27:38 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ typedef struct s_shell
 	int			pipe_count;
 	int			pipearg_count;
 	char		**pipeargs;
-	int			echo_n;
 	char		*echo_n_control;
+	int			echo_n;
+	int			statuscode;
 	t_commander	commander;
 	t_collector	collector;
 }	t_shell;
@@ -90,7 +91,6 @@ char	*return_exec_path(char *exec_name);
 char	*get_env_variable(char *var_name);
 int		if_execexist(char *exec_name);
 
-
 //pipe
 int	pipe_exists(char *input);
 int	pipe_execute(char **pipeargss);
@@ -98,9 +98,9 @@ int	pipe_execute(char **pipeargss);
 //redirections
 int		redirection_exists(char *line);
 void	redirection_redirector(char **linefornow);
-void	infile(char** args);
-void	outfile(char** args);
-void	append(char** args);
+void	infile(char **args);
+void	outfile(char **args);
+void	append(char **args);
 void	heredoc(char **command, char *delimiter);
 
 #endif

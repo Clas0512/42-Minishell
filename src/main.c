@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 12:15:05 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:50:19 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 // init_env is not working properly, order is changing while on a new prompt thats called with system call check why
 // system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
 //Pipe has heap overflow, deal with it, refactor it, make it better, make it work, make it right. And don't forget the Norm <3
-//executor, env, redirections, export, collector, command, main norm is not fixed
+//env, redirections, export, collector, command, main norm is not fixed
 //make $?  
+//fix echo dsfgdfsg$PATHdfgsd
 
 t_shell	g_shell;
 

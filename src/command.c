@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:17 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/22 04:37:54 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:01:25 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void init_commander(t_commander *commander)
 
 t_command *create_command(t_commander *commander)
 {
-	t_command *new;
-	t_collection *collection;
+	t_command		*new;
+	t_collection	*collection;
 
 	new = malloc(sizeof(t_command));
 	new->next = NULL;
@@ -47,4 +47,3 @@ void add_command(t_commander *commander, t_command *new)
 		commander->tail = commander->tail->next;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 05:01:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 08:15:59 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 17:23:36 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	redirection_exists(char *line)
 void	redirection_redirector(char **linefornow)
 {
 	int	i;
+	char	*cmd[] = {"grep", "example", NULL};
 
 	i = 0;
 	while (linefornow[i])
@@ -43,42 +44,36 @@ void	redirection_redirector(char **linefornow)
 		}
 		else if (ft_strncmp(linefornow[i], "<<", 2) == 0)
 		{
-			char *cmd[] = {"grep", "example", NULL};
 			heredoc(cmd, "EFF");
 			break ;
 		}
 		else if (ft_strncmp(linefornow[i], ">", 1) == 0)
-		{
 			outfile(linefornow);
-			break ;
-		}
 		else if (ft_strncmp(linefornow[i], "<", 1) == 0)
-		{
 			infile(linefornow);
-			break ;
-		}
 		i++;
 	}
 }
 
-void	infile(char **args) 
+void	infile(char **args)
 {
 	char	*filename;
 	int		result;
 	int		fd;
-	int 	i;
+	int		i;
 	int		status;
 	pid_t	pid;
 
 	i = 0;
 	filename = NULL;
 	status = 0;
-	while (args[i] != NULL) {
-		if (ft_strncmp(args[i], "<", 1) == 0) 
+	while (args[i] != NULL)
+	{
+		if (ft_strncmp(args[i], "<", 1) == 0)
 		{
-			filename = args[i+1];
+			filename = args[i + 1];
 			args[i] = NULL;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -118,9 +113,9 @@ void	outfile(char **args)
 		{
 			if (ft_strncmp(args[i], ">", 1) == 0)
 			{
-				output = args[i+1];
+				output = args[i + 1];
 				args[i] = NULL;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -131,32 +126,33 @@ void	outfile(char **args)
 			exit(EXIT_FAILURE);
 		execute(args[0], args);
 		exit(EXIT_FAILURE);
-	} 
+	}
 	else
 		waitpid(pid, &status, 0);
 }
 
-void	append(char **args) 
+void	append(char **args)
 {
-	int fd;
-	int i = 0;
+	int	fd;
+	int	i;
 
+	i = 0;
 	while (args[i] != NULL)
 	{
 		if (ft_strncmp(args[i], ">>", 1) == 0)
-			break;
+			break ;
 		i++;
 	}
 	if (ft_strncmp(args[i], ">>", 2) == 0)
-		fd = open(args[i+1], O_WRONLY|O_CREAT|O_APPEND, 0644);
+		fd = open(args[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
-		fd = open(args[i+1], O_WRONLY|O_CREAT|O_TRUNC, 0644);
+		fd = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		return;
+		return ;
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		return;
+		return ;
 	if (close(fd) == -1)
-		return;
+		return ;
 	execute(args[0], args);
 	exit(EXIT_FAILURE);
 }
@@ -182,9 +178,9 @@ void	heredoc(char **args, char *delimiter)
 		{
 			delimiter_found = 1;
 			free(line);
-			break;
+			break ;
 		}
-		write(tmp_fd, line, strlen(line));
+		write(tmp_fd, line, ft_strlen(line));
 		write(tmp_fd, "\n", 1);
 		free(line);
 		printf("> ");
