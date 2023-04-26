@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 04:38:16 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 08:38:18 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_shell
 	int			pipe_count;
 	int			pipearg_count;
 	char		**pipeargs;
+	int			echo_n;
+	char		*echo_n_control;
 	t_commander	commander;
 	t_collector	collector;
 }	t_shell;

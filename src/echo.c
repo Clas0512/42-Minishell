@@ -6,18 +6,17 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/22 04:07:28 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:45:59 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Printing entra $ in echo fix that later
-
-void	check_newline(int n)
+void	newline_solution(void)
 {
-	if (n == 0)
+	if (g_shell.echo_n == 0)
 		printf("\n");
+	g_shell.echo_n = 0;
 }
 
 int	env_checker(char *envname)
@@ -47,33 +46,63 @@ int	env_checker(char *envname)
 	return (0);
 }
 
+int	echo_n_control(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+		i++;
+	if (i == 2 && av[0] == '-' && av[1] == 'n')
+	{
+		g_shell.echo_n = 1;
+		return (1);
+	}
+	else
+		g_shell.echo_n = 0;
+	return (0);
+}
+
+int	echo_control(char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$' && env_checker(arg) == 1)
+			return (1);
+		else if (arg[0] == '$' && arg[1] == '\0')
+		{
+			printf("$");
+			return (1);
+		}
+		else if (arg[i] == '$' && env_checker(arg) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	echo(int ac, char **av)
 {
 	int	i;
 	int	j;
-	int	n;
 
 	i = 0;
-	n = 0;
-	while (i++ <= ac)
+	while (av[i])
+		i++;
+	ac = i;
+	i = 0;
+	while (i++ <= ac && av[i])
 	{
 		j = 0;
 		while (av[i] && av[i][j] != '\0')
 		{
-			if (av[1][0] == '-' && av[1][1] == 'n')
-			{
-				n = 1;
+			if (echo_n_control(av[1]) == 1 && g_shell.echo_n == 1)
 				break ;
-			}
-			else if ((av[i][j] == '$' && env_checker(av[i]) == 1))
+			else if (echo_control(av[i]) == 1)
 				break ;
-			else if (av[i][0] == '$' && av[i][1] == '\0')
-				printf("$");
-			else if (av[i][j] == '$' && env_checker(av[i]) == 0)
-			{
-				printf("\n");
-				break ;
-			}
 			else
 				printf("%c", av[i][j]);
 			j++;
@@ -81,5 +110,5 @@ void	echo(int ac, char **av)
 		if ((av[i] && av[i][j] == '\0') && av[i + 1] != NULL)
 			printf(" ");
 	}
-	check_newline(n);
+	newline_solution();
 }

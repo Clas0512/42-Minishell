@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 04:39:10 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:40:17 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ int	pipe_execute(char **pipeargss)
 	while (pipeargss[pipeargs_idx] != NULL)
 	{
 		if (ft_strncmp(pipeargss[pipeargs_idx], "|", 1) == 0)
-		{
 			num_pipes++;
-		}
 		pipeargs_idx++;
 	}
 	int	pipes[num_pipes * 2];
@@ -54,10 +52,7 @@ int	pipe_execute(char **pipeargss)
 	while (i < num_pipes)
 	{
 		if (pipe(pipes + i * 2) < 0)
-		{
-			perror ("pipe");
 			return (-1);
-		}
 		i++;
 	}
 	start = 0;
@@ -72,10 +67,10 @@ int	pipe_execute(char **pipeargss)
 		i = start;
 		while (i < end)
 		{
-			args[i-start] = pipeargss[i];
+			args[i - start] = pipeargss[i];
 			i++;
 		}
-		args[end-start] = NULL;
+		args[end - start] = NULL;
 		pid = fork();
 		if (pid < 0)
 			return (-1);
@@ -108,15 +103,13 @@ int	pipe_execute(char **pipeargss)
 			if (pipe_idx < num_pipes)// Close the outp end of the curr pipe
 				close(pipes[pipe_idx*2+1]);
 			if (waitpid(pid, &wstatus, 0) < 0)
-			{
-				perror ("waitpid");
 				return (-1);
-			}
 			if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
 				return (-1);
 		}
 		start = end + 1;
-		end = start;
+		if (pipeargss[end] != NULL)
+			end = start;
 		pipe_idx++;
 	}
 	return (0);
