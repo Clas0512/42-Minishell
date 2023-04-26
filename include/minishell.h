@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 21:13:36 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 23:51:18 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_shell
 	char		**pipeargs;
 	char		*echo_n_control;
 	int			echo_n;
-	int			statuscode;
+	int			exit_status;
 	t_commander	commander;
 	t_collector	collector;
 }	t_shell;
@@ -92,8 +92,10 @@ char	*get_env_variable(char *var_name);
 int		if_execexist(char *exec_name);
 
 //pipe
-int	pipe_exists(char *input);
-int	pipe_execute(char **pipeargss);
+int		pipe_exists(char *input);
+void	pipe_execute(char **pipeargss);
+void	parent_proc(int *pipes, int pipe_idx, int num_pipes, pid_t pid);
+void	child_proc(char **args, int *pipes, int pipe_idx, int num_pipes);
 
 //redirections
 int		redirection_exists(char *line);

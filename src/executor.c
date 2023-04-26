@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 18:20:06 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:34:31 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ int	execute(char *exec_name, char **args)
 	else
 	{
 		waitpid(pid, &wstatus, WUNTRACED);
-		g_shell.statuscode = WEXITSTATUS(wstatus);
-		printf("Exit status: %d, statuscode = %d\n", WEXITSTATUS(wstatus), g_shell.statuscode);
 		if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
 			return (1);
 	}
