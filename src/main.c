@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/25 00:46:36 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 04:38:39 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 //add cwdr etc. to global variable for the aesthetics. (Done and Done)
 //FIX THE WILDCARDS IN MAKEFILE!!!!!!
 //FIX THE AESTHETICS OF THE EXIT COMMAND (done)
+//FIX THE INFILE OUTCOME
 //Refactor
+//CLEAN UP REDIRECTIONS
 //Add the other commands(done)
 //Add the bonus
 //Add the leaks to collector
@@ -52,6 +54,8 @@ void	read_the_line(char *line, char **linefornow, int ac)
 		export_env(linefornow);
 	else if (ft_strncmp(line, "cd", 2) == 0)
 		change_directory(linefornow);
+	else if (redirection_exists(line) == 0)
+		redirection_redirector(linefornow);
  	else if (pipe_exists(line) > 0)
 		pipe_execute(linefornow);
 	else if (if_execexist(linefornow[0]) == 1)

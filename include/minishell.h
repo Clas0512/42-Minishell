@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/24 23:08:30 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 04:38:16 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,13 @@ int		if_execexist(char *exec_name);
 //pipe
 int	pipe_exists(char *input);
 int	pipe_execute(char **pipeargss);
+
+//redirections
+int		redirection_exists(char *line);
+void	redirection_redirector(char **linefornow);
+void	infile(char** args);
+void	outfile(char** args);
+void	append(char** args);
+void	heredoc(char **command, char *delimiter);
 
 #endif
