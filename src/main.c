@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 10:30:42 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:53:08 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,9 @@
 //redirections, pipe collector, command, main norm is not fixed
 //make $?  
 //fix echo dsfgdfsg$PATHdfgsd
+//append & l"s" ''''-l | "w"c"
 
 t_shell	g_shell;
-
-void	read_the_line(char *line, char **linefornow, int ac)
-{	
-	if (check_syntax(linefornow) == 0)
-		printf("Syntax error near unexpected token\n");
-	else if (check_syntax_builtin(linefornow) == 0)
-		;
-	else if (redirection_exists(line) == 0)
-		redirection_redirector(linefornow);
- 	else if (pipe_exists(line) > 0)
-		pipe_execute(linefornow);
-	else if (if_execexist(linefornow[0]) == 1)
-		execute(linefornow[0], linefornow);
-	else if (linefornow[0] == NULL)
-		return ;
-	else
-		printf("%s Command not found: %s\n", g_shell.cwdr, line);
-}
 
 void	open_terminal(char *av)
 {
@@ -75,6 +58,7 @@ void	open_terminal(char *av)
 void	flush_the_terminal(void)
 {
 	printf("\033[1;1H\033[2J");
+	g_shell.exit_status = 0;
 }
 
 void	init_collection(void)
@@ -84,6 +68,35 @@ void	init_collection(void)
 	init_commander(&g_shell.commander);
 	init_signal();
 }
+
+void	read_the_line(char *line, char **linefornow)
+{	
+	if (check_syntax_redir(linefornow) == 0)
+	{
+		printf("Syntax error near unexpected token\n");
+		g_shell.exit_status = 0;
+	}
+	else if (check_syntax_builtin(linefornow) == 0)
+		;
+	else if (check_exit_status(linefornow) == 0)
+		;
+	else if (redirection_exists(line) == 0)
+		redirection_redirector(linefornow);
+ 	else if (pipe_exists(line) == 0)
+		pipe_execute(linefornow);
+	else if (ft_strncmp(linefornow[0], "clear", 5) == 0)
+		flush_the_terminal();
+	else if (if_execexist(linefornow[0]) == 1)
+		execute(linefornow[0], linefornow);
+	else if (linefornow[0] == NULL)
+		return ;
+	else
+	{
+		printf("%s Command not found: %s\n", g_shell.cwdr, line);
+		g_shell.exit_status = 127;
+	}
+}
+
 
 int	main(int ac, char **av, char **envp)
 {
@@ -107,7 +120,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		linefornow = ft_split(line, ' ');
 		add_history(line);
-		read_the_line(line, linefornow, ac);
+		read_the_line(line, linefornow);
 		free(line);
 		free(linefornow);
 		free(g_shell.cwdr);

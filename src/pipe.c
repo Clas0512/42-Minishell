@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 02:02:31 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:18:33 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	pipe_exists(char *line)
 	while (line[i])
 	{
 		if (line[i] == '|')
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 void	child_proc(char **args, int *pipes, int pipe_idx, int num_pipes)
