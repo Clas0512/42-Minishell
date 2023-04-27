@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 21:08:27 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 21:09:19 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:45:36 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,39 @@ void	init_env(void)
 		i++;
 	}
 	g_shell.environments[i] = NULL;
+}
+
+void	pipe_execute_init(int mod)
+{
+	if (mod == 1)
+	{
+		g_shell.pipe.pipes = malloc(sizeof(int) * g_shell.pipe.num_pipes * 2);
+		create_collection(g_shell.pipe.pipes);
+	}
+	else
+	{
+		g_shell.pipe.num_pipes = 0;
+		g_shell.pipe.pipeargs_idx = 0;
+		g_shell.pipe.args = NULL;
+		g_shell.pipe.start = 0;
+		g_shell.pipe.end = 0;
+		g_shell.pipe.pipe_idx = 0;
+		g_shell.pipe.i = 0;
+	}
+}
+
+void	redir_init(void)
+{
+	g_shell.redir.i = -1;
+	g_shell.redir.status = 0;
+	g_shell.redir.pid = 0;
+	g_shell.redir.fd = 0;
+	g_shell.redir.result = 0;
+	g_shell.redir.filename = NULL;
+}
+
+void	append_init(void)
+{
+	g_shell.redir3.i = 0;
+	g_shell.redir3.filename = NULL;
 }

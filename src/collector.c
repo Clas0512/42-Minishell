@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:14 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 14:51:36 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:38:21 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@ void init_collector(t_collector *collector)
 }
 
 /*create a collection node variable*/
-t_collection *create_collection(void *address)
+void	*create_collection(void *address)
 {
 	t_collection	*new;
 
 	new = malloc(sizeof(t_collection));
 	new->next = NULL;
 	new->address = address;
-	return (new);
+	add_collection(new);
 }
 
 /*add collection node to collector.*/
-void add_collection(t_collector *collector, t_collection *new)
+void	add_collection(t_collection *new)
 {
-	if (collector->head == NULL)
+	if (g_shell.collector.head == NULL)
 	{
-		collector->head = new;
-		collector->tail = new;
+		g_shell.collector.head = new;
+		g_shell.collector.tail = new;
 	}
 	else
 	{
-		collector->tail->next = new;
-		collector->tail = collector->tail->next;
+		g_shell.collector.tail->next = new;
+		g_shell.collector.tail = g_shell.collector.tail->next;
 	}
 }
