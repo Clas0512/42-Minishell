@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 13:36:06 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:12:07 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "string.h"
 # include "pipe.h"
 # include "lexer.h"
+# include "redirection.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -48,6 +49,8 @@ typedef struct s_shell
 	t_commander	commander;
 	t_collector	collector;
 	t_pipe		pipe;
+	t_redir		redir;
+	t_redir2	redir2;
 }	t_shell;
 
 extern t_shell	g_shell;
@@ -83,6 +86,7 @@ int		if_execexist(char *exec_name);
 //pipe
 int		pipe_exists(char *input);
 void	pipe_execute(char **pipeargss);
+void	pipe_execute_init(int mod);
 void	parent_proc();
 void	child_proc();
 
@@ -93,6 +97,7 @@ void	infile(char **args);
 void	outfile(char **args);
 void	append(char **args);
 void	heredoc(char **command, char *delimiter);
+void	redir_init(void);
 
 //sytnax
 int	check_syntax_builtin(char **linefornow);

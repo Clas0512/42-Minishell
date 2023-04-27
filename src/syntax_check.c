@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:36:12 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 13:12:39 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:45:30 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	check_syntax_redir(char **linefornow)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
+	tmp = linefornow[0];
 	while (linefornow[i] != NULL)
 		i++;
-	if (i == 1 && (redirection_exists(linefornow[0]) == 0 || pipe_exists(linefornow[0]) == 0))
+	if (i == 1 && (redirection_exists(tmp) == 0 || pipe_exists(tmp) == 0))
 	{
 		g_shell.exit_status = 258;
 		return (0);
@@ -102,7 +104,7 @@ int	check_exit_status(char **linefornow)
 	}
 	else if (ft_strncmp(linefornow[0], "$?", 2) == 0)
 	{
-		printf("%s Command not found : %d\n",g_shell.cwdr, g_shell.exit_status);
+		printf("%s Command not found : %d\n", g_shell.cwdr, g_shell.exit_status);
 		g_shell.exit_status = 127;
 		return (0);
 	}

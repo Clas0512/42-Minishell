@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 13:14:07 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:48:18 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,17 @@
 /* 
 //add cwdr etc. to global variable for the aesthetics. (Done and Done)
 //FIX THE AESTHETICS OF THE EXIT COMMAND (done)
-// Echo Doesn't prints more than 2 words, i f-ed it up with removing ac, dear future me handle that plox.
-// 																			^^ ^ ^^ don't worry kiddo, i gotcha ;) <3
-//Add the other commands(done)
-//ADD PATH CONTROL TO EXECUTOR <---- DONE BABYBOY, LOVE YA */
 //FIX THE WILDCARDS IN MAKEFILE!!!!!!
 //FIX THE INFILE OUTCOME
 //Refactor
-//Add the bonus
 //CLEAN UP REDIRECTIONS
 //Add the leaks to collector
 //Check the norm
 //Check the leaks
 //Move the files to the right folders and change the makefile
-// init_env is not working properly, order is changing while on a new prompt thats called with system call check why
-// system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
-//Pipe has heap overflow, deal with it, refactor it, make it better, make it work, make it right. And don't forget the Norm <3
 //redirections, pipe collector, command, main norm is not fixed
-//make $?  
 //fix echo dsfgdfsg$PATHdfgsd
-//append & l"s" ''''-l | "w"c"
+//append & l"s" ''''-l | "w"c"*/
 
 t_shell	g_shell;
 
@@ -68,8 +59,6 @@ void	init_collection(void)
 	init_commander(&g_shell.commander);
 	init_signal();
 }
-
-
 
 void	read_the_line(char *line, char **linefornow)
 {	

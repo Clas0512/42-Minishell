@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 13:36:31 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:56:12 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pipe_exists(char *line)
 	return (1);
 }
 
-void	child_proc()
+void	child_proc(void)
 {
 	int	i;
 
@@ -45,7 +45,7 @@ void	child_proc()
 	exit (EXIT_SUCCESS);
 }
 
-void	parent_proc()
+void	parent_proc(void)
 {
 	int	wstatus;
 
@@ -62,20 +62,29 @@ void	parent_proc()
 	}
 }
 
-void	pipe_execute_init(int mod)
+void	pipe_execute_cutter(char **pipeargss)
 {
-	if (mod == 1)
-		g_shell.pipe.pipes = malloc(sizeof(int) * g_shell.pipe.num_pipes * 2);
-	else
+	while (pipeargss[g_shell.pipe.end] != NULL
+		&& ft_strncmp(pipeargss[g_shell.pipe.end], "|", 1) != 0)
+		g_shell.pipe.end++;
+	g_shell.pipe.args = malloc(sizeof(char *)
+			* (g_shell.pipe.end - g_shell.pipe.start + 1));
+	g_shell.pipe.i = g_shell.pipe.start;
+	while (g_shell.pipe.i < g_shell.pipe.end)
 	{
-		g_shell.pipe.num_pipes = 0;
-		g_shell.pipe.pipeargs_idx = 0;
-		g_shell.pipe.args = NULL;
-		g_shell.pipe.start = 0;
-		g_shell.pipe.end = 0;
-		g_shell.pipe.pipe_idx = 0;
-		g_shell.pipe.i = 0;
+		g_shell.pipe.args[g_shell.pipe.i - g_shell.pipe.start]
+			= pipeargss[g_shell.pipe.i];
+		g_shell.pipe.i++;
 	}
+	g_shell.pipe.args[g_shell.pipe.end - g_shell.pipe.start] = NULL;
+	g_shell.pipe.pid = fork();
+	if (g_shell.pipe.pid < 0)
+		return ;
+	else if (g_shell.pipe.pid == 0)
+		child_proc();
+	else
+		parent_proc();
+	return ;
 }
 
 void	pipe_execute(char **pipeargss)
@@ -96,24 +105,7 @@ void	pipe_execute(char **pipeargss)
 	}
 	while (pipeargss[g_shell.pipe.end] != NULL)
 	{
-		while (pipeargss[g_shell.pipe.end] != NULL
-			&& ft_strncmp(pipeargss[g_shell.pipe.end], "|", 1) != 0)
-			g_shell.pipe.end++;
-		g_shell.pipe.args = malloc(sizeof(char *) * (g_shell.pipe.end - g_shell.pipe.start + 1));
-		g_shell.pipe.i = g_shell.pipe.start;
-		while (g_shell.pipe.i < g_shell.pipe.end)
-		{
-			g_shell.pipe.args[g_shell.pipe.i - g_shell.pipe.start] = pipeargss[g_shell.pipe.i];
-			g_shell.pipe.i++;
-		}
-		g_shell.pipe.args[g_shell.pipe.end - g_shell.pipe.start] = NULL;
-		g_shell.pipe.pid = fork();
-		if (g_shell.pipe.pid < 0)
-			return ;
-		else if (g_shell.pipe.pid == 0)
-			child_proc();
-		else
-			parent_proc();
+		pipe_execute_cutter(pipeargss);
 		g_shell.pipe.start = g_shell.pipe.end + 1;
 		if (pipeargss[g_shell.pipe.end] != NULL)
 			g_shell.pipe.end = g_shell.pipe.start;

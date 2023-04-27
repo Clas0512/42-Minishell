@@ -1,31 +1,26 @@
-/* #ifndef REDIRECTION_H
+#ifndef REDIRECTION_H
 # define REDIRECTION_H
 
 #include "minishell.h"
-#include <stdlib.h>
-#include <fcntl.h>
 
-typedef struct s_redirection
+typedef struct s_redir
 {
-	int	fd;
-	char *name;
-	struct s_redirection *next;
-}	t_redirection;
+	char	*filename;
+	int		result;
+	int		fd;
+	int		i;
+	int		status;
+	pid_t	pid;
+}	t_redir;
 
-typedef struct s_director
+typedef struct s_redir2
 {
-	t_redirection *append_head;
-	t_redirection *heredoc_head;
-	t_redirection *infile_head;
-	t_redirection *outfile_head;
-	t_redirection *append_tail;
-	t_redirection *heredoc_tail;
-	t_redirection *infile_tail;
-	t_redirection *outfile_tail;
-}	t_director;
+	int			delimiter_found;
+	char		*line;
+	char		*tmp_filename;
+	int			tmp_fd;
+	pid_t		pid;
+	int			status;
+}	t_redir2;
 
-t_redirection *create_redirection(char *name, int flags);
-void init_director(t_director *director);
-void add_redirection(t_redirection **head, t_redirection **tail, t_redirection *new);
-
-#endif */
+#endif
