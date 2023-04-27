@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:36:12 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 14:45:30 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:14:09 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	check_syntax_redir(char **linefornow)
 		i++;
 	if (i == 1 && (redirection_exists(tmp) == 0 || pipe_exists(tmp) == 0))
 	{
+		printf("%s Syntax error near unexpected token\n", g_shell.cwdr);
 		g_shell.exit_status = 258;
 		return (0);
 	}

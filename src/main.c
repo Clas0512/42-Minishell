@@ -6,25 +6,20 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 18:48:18 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:17:01 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/* 
-//add cwdr etc. to global variable for the aesthetics. (Done and Done)
-//FIX THE AESTHETICS OF THE EXIT COMMAND (done)
+/* ************************************************************************** */
 //FIX THE WILDCARDS IN MAKEFILE!!!!!!
-//FIX THE INFILE OUTCOME
 //Refactor
-//CLEAN UP REDIRECTIONS
 //Add the leaks to collector
 //Check the norm
 //Check the leaks
 //Move the files to the right folders and change the makefile
-//redirections, pipe collector, command, main norm is not fixed
-//fix echo dsfgdfsg$PATHdfgsd
-//append & l"s" ''''-l | "w"c"*/
+//collector, command, main norm is not fixed*/
+/* ************************************************************************** */
 
 t_shell	g_shell;
 
@@ -65,18 +60,13 @@ void	read_the_line(char *line, char **linefornow)
 	if (linefornow[0] == NULL)
 		return ;
 	else if (check_syntax_redir(linefornow) == 0)
-	{
-		printf("%s Syntax error near unexpected token\n", g_shell.cwdr);
-		g_shell.exit_status = 258;
-	}
+		return ;
  	else if (linefornow[0][0] == '\0')
 	{
 		printf("%s Command not found:\n", g_shell.cwdr);
 		g_shell.exit_status = 127;
 	}
-	else if (check_exit_status(linefornow) == 0)
-		return ;
-	else if (check_syntax_builtin(linefornow) == 0)
+	else if (check_exit_status(linefornow) == 0 || check_syntax_builtin(linefornow) == 0)
 		return ;
 	else if (redirection_exists(line) == 0)
 		redirection_redirector(linefornow);

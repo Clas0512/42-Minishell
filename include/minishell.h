@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 21:05:12 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 23:12:40 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*get_pwd(void);
 void	set_env(char *env, char *str);
 void	change_directory(char **cdargs);
 char	*get_env(char *env);
+int		echo_mid_checker(char *arg);
 
 //promptline
 void	read_the_line(char *line, char **linefornow);
