@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 19:12:07 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:05:12 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_shell
 	t_pipe		pipe;
 	t_redir		redir;
 	t_redir2	redir2;
+	t_redir3	redir3;
 }	t_shell;
 
 extern t_shell	g_shell;
@@ -98,6 +99,7 @@ void	outfile(char **args);
 void	append(char **args);
 void	heredoc(char **command, char *delimiter);
 void	redir_init(void);
+void	append_init(void);
 
 //sytnax
 int	check_syntax_builtin(char **linefornow);

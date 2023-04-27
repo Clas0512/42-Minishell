@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:47:16 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 20:04:26 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:06:16 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,31 @@
 
 void	append(char **args)
 {
-	int	fd;
-	int	i;
-
-	i = 0;
-	while (args[i] != NULL)
+	append_init();
+	while (args[g_shell.redir3.i] != NULL)
 	{
-		if (ft_strncmp(args[i], ">>", 1) == 0)
+		if (strcmp(args[g_shell.redir3.i], ">>") == 0)
+		{
+			g_shell.redir3.filename = args[g_shell.redir3.i + 1];
+			args[g_shell.redir3.i] = NULL;
 			break ;
-		i++;
+		}
+		g_shell.redir3.i++;
 	}
-	if (ft_strncmp(args[i], ">>", 2) == 0)
-		fd = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		fd = open(args[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-		return ;
-	if (dup2(fd, STDOUT_FILENO) == -1)
-		return ;
-	if (close(fd) == -1)
-		return ;
-	execute(args[0], args);
-	exit(EXIT_FAILURE);
+	g_shell.redir3.file_desc = open(g_shell.redir3.filename, O_WRONLY
+			| O_APPEND | O_CREAT, 0644);
+	g_shell.redir3.pid = fork();
+	if (g_shell.redir3.pid == -1)
+		exit(1);
+	else if (g_shell.redir3.pid == 0)
+	{
+		if (dup2(g_shell.redir3.file_desc, STDOUT_FILENO) == -1)
+			exit(1);
+		close(g_shell.redir3.file_desc);
+		execute(args[0], args);
+		exit(1);
+	}
+	waitpid(g_shell.redir3.pid, &g_shell.redir3.status, 0);
 }
 
 void	outfile_childe(char **args)

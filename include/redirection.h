@@ -23,4 +23,13 @@ typedef struct s_redir2
 	int			status;
 }	t_redir2;
 
+typedef struct s_redir3
+{
+	char *filename;
+	int i;
+	pid_t pid;
+	int file_desc;
+	int status;
+}	t_redir3;
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 21:08:27 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 19:06:11 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:05:36 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,10 @@ void	redir_init(void)
 	g_shell.redir.fd = 0;
 	g_shell.redir.result = 0;
 	g_shell.redir.filename = NULL;
+}
+
+void	append_init(void)
+{
+	g_shell.redir3.i = 0;
+	g_shell.redir3.filename = NULL;
 }
