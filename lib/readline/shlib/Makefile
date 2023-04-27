@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /Users/clas0512/Desktop/güncel2/lib/readline
+BUILD_DIR = /Users/clas0512/Desktop/asd/lib/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = darwin22.4.0
 host_vendor = apple
 
-prefix = /Users/clas0512/Desktop/güncel2/lib/readline
+prefix = /Users/clas0512/Desktop/asd/lib/readline
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

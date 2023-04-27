@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:24 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/22 23:39:28 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:11:37 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,24 @@ void	init_env(void)
 		i++;
 	}
 	g_shell.environments[i] = NULL;
+}
+
+char	*get_env_variable(char *var_name)
+{
+	int		i;
+	char	*var;
+	char	*temp;
+
+	i = 0;
+	while (g_shell.environments[i])
+	{
+		temp = g_shell.environments[i];
+		if (ft_strncmp(temp, var_name, ft_strlen(var_name)) == 0)
+		{
+			var = ft_substr(temp, ft_strlen(var_name) + 1, ft_strlen(temp));
+			return (var);
+		}
+		i++;
+	}
+	return (NULL);
 }

@@ -6,92 +6,111 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/23 15:27:30 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 12:40:17 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_exists(char *input)
+int	pipe_exists(char *line)
 {
 	int	i;
-	int	pipe_count;
 
 	i = 0;
-	pipe_count = 0;
-	while (input[i])
+	while (line[i])
 	{
-		if (input[i] == '|')
-			pipe_count++;
+		if (line[i] == '|')
+			return (1);
 		i++;
 	}
-	return (pipe_count);
+	return (0);
 }
 
-void	init_pipe(char *exec_name, char **pipe_args)
+int	pipe_execute(char **pipeargss)
 {
-	char	**tmp;
+	int		num_pipes;
+	int		pipeargs_idx;
+	int		pipe_idx;
+	int		wstatus;
+	int		start;
+	int		end;
 	int		i;
+	char	**args;
+	pid_t	pid;
 
-	//fill tmp with pipe_args arguments until | is found
-	i = 0;
-	while (pipe_args[i] && *pipe_args[i] != '|')
+	num_pipes = 0;
+	pipeargs_idx = 0;
+	args = NULL;
+	while (pipeargss[pipeargs_idx] != NULL)
 	{
+		if (ft_strncmp(pipeargss[pipeargs_idx], "|", 1) == 0)
+			num_pipes++;
+		pipeargs_idx++;
+	}
+	int	pipes[num_pipes * 2];
+	i = 0;
+	while (i < num_pipes)
+	{
+		if (pipe(pipes + i * 2) < 0)
+			return (-1);
 		i++;
 	}
-	tmp = (char **)malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (pipe_args[i] && *pipe_args[i] != '|')
-	{
-		tmp[i] = ft_strdup(pipe_args[i]);
-		i++;
+	start = 0;
+	end = 0;
+	pipe_idx = 0;
+	while (pipeargss[end] != NULL)
+	{//Find the end of the curr comm
+		while (pipeargss[end] != NULL && ft_strncmp(pipeargss[end], "|", 1) != 0)
+			end++;
+		//Set up the args for the curr comm
+		args = malloc(sizeof(char *) * (end - start + 1));
+		i = start;
+		while (i < end)
+		{
+			args[i - start] = pipeargss[i];
+			i++;
+		}
+		args[end - start] = NULL;
+		pid = fork();
+		if (pid < 0)
+			return (-1);
+		else if (pid == 0)
+		{// Childé
+			if (pipe_idx > 0)// Set up input redir from the prev comm
+			{
+				if (dup2(pipes[(pipe_idx-1)*2], STDIN_FILENO) < 0)
+					return (-1);
+			}
+			if (pipe_idx < num_pipes)// Set up outp redir to the next comm
+			{
+				if (dup2(pipes[pipe_idx*2+1], STDOUT_FILENO) < 0)
+					return (-1);
+			}
+			i = 0;
+			while (i < num_pipes * 2)
+			{
+				close (pipes[i]);
+				i++;
+			}
+			if (execute(args[0], args) != 0)
+				exit (EXIT_FAILURE);
+			exit (EXIT_SUCCESS);
+		}
+		else
+		{//Par.proc.
+			if (pipe_idx > 0)//Close the inp end of the prev pipe
+				close(pipes[(pipe_idx-1)*2]);
+			if (pipe_idx < num_pipes)// Close the outp end of the curr pipe
+				close(pipes[pipe_idx*2+1]);
+			if (waitpid(pid, &wstatus, 0) < 0)
+				return (-1);
+			if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
+				return (-1);
+		}
+		start = end + 1;
+		if (pipeargss[end] != NULL)
+			end = start;
+		pipe_idx++;
 	}
-	tmp[i] = NULL;
-	while (1)
-	{
-		plumber(exec_name, tmp);
-		break;
-	}
-}
-
-int	plumber(char *exec_name, char **pipe_args)
-{
-    int 	fd[2];
-    pid_t 	pid;
-    char	*cmd2[] = {"wc", "-l", NULL};
-	
-    if (pipe(fd) == -1) {
-        perror("pipe failed");
-        exit(EXIT_FAILURE);
-    }
-
-    pid = fork();
-    if (pid < 0) {
-        perror("fork failed");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid == 0) { // child process
-        close(fd[0]); // close read end of the pipe
-        dup2(fd[1], STDOUT_FILENO); // redirect stdout to the write end of the pipe
-        execute(exec_name, pipe_args); // execute the first command
-        exit(EXIT_FAILURE);
-    }
-    else { // parent process
-        close(fd[1]); // close write end of the pipe
-        pid = fork();
-        if (pid < 0) {
-            perror("fork failed");
-            exit(EXIT_FAILURE);
-        }
-        else if (pid == 0) { // child process
-            dup2(fd[0], STDIN_FILENO); // redirect stdin to the read end of the pipe
-            execute(cmd2[0], cmd2); // execute the second command
-            exit(EXIT_FAILURE);
-        }
-        else { // parent process
-            waitpid(pid, NULL, 0); // wait for the second child process to finish
-        }
-    }
-
-    return 0;
+	return (0);
 }

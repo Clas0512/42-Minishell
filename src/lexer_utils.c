@@ -47,10 +47,24 @@ int word_passer(char *str, int *i)
     return (1);
 }
 
+// int is_word_final_basic(char *str, int i)
+// {
+// 	if ((str[i] != 32 && is_rdrct(str, i) == 0 && str[i] != '\0') &&
+// 		(str[i + 1] == 32 || str[i + 1] == '\0' || is_rdrct(str, i) != 0))
+// 		return (1);
+// 	return (0);    
+// }
+
 int is_word_final_basic(char *str, int i)
 {
-	if ((str[i] != 32 && is_rdrct(str, i) == 0 && str[i] != '\0') &&
-		(str[i + 1] == 32 || str[i + 1] == '\0' || is_rdrct(str, i) != 0))
+    if (str[i] == 0 || str[i] == 32 || is_rdrct(str, i) != 0)
+        return (1);
+    return (0);
+}
+
+int	is_word_final_quotes(char *str, int i)
+{
+	if (str[i] == 32 || str[i] == 0 || is_rdrct(str, i))
 		return (1);
-	return (0);    
+	return (0);
 }

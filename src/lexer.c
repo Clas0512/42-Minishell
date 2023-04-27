@@ -11,12 +11,13 @@ void	check_error(t_lex *info, char *str)
 		if (str[i] == 34 || str[i] == 39)
 		{
 			pvt = str[i];
-			i++;
-			while (str[i] != pvt)
+			while (str[++i] != pvt)
 			{
 				if (str[i] == '\0')
-					info->error = 1;
-				return ;
+				{
+					info->error = true;
+					return ;
+				}
 			}
 		}
 	}
@@ -31,7 +32,7 @@ void    init_struct(t_lex *info, char *str)
 	info->d_q = 0;
 	info->a = 0;
 	info->b = 0;
-	info->error = 0;
+	info->error = false;
 	info->error_str = malloc(sizeof(char *) * 2);
 	info->error_str[0] = ft_strdup("ERROR");
 }
@@ -52,20 +53,16 @@ void letter_manager(t_lex *info, char *str, char **line)
 		else if (str[j] == 34 || str[j] == 39) // tırnak mı? Değil mi?
 		{
 			length += letter_counter_in_quotes(str, str[j], &j); // karakterleri sayma fonksiyonundan dönen değeri length değişkenine atma
-			if (is_word_final_basic(str, j)) // eğer kelime bittiyse mallocla yer açılcak
+			// printf("length :%d \n", length);
+			if (is_word_final_quotes(str, j)) // eğer kelime bittiyse mallocla yer açılcak
 			{
-				// printf("!!!QUOTES -   word: %d   length: %d\n", current_wc, length);
-				// line[current_wc] = malloc(sizeof(char) * (length + 2));
 				line[current_wc] = ft_calloc(4, length + 2);
 				length = 0;
 				current_wc++;
-				j++;
 			}
 		}
 		else if (is_rdrct(str, j) == 1)
 		{
-			//printf("!!!SINGLE_REDIRECTION -   word: %ld\n", current_wc);
-			// line[current_wc] = malloc(sizeof(char) * 3);
 			line[current_wc] = ft_calloc(4, 3);
 			current_wc++;
 			j++;
@@ -73,10 +70,7 @@ void letter_manager(t_lex *info, char *str, char **line)
 		}
 		else if (is_rdrct(str, j) == 2)
 		{
-			//printf("!!!DOUBLE_REDIRECTION -   word: %ld\n", current_wc);
-			// line[current_wc] = malloc(sizeof(char) * 4);
 			line[current_wc] = ft_calloc(4, 4);
-			// printf("zort%s\n", line[current_wc]);
 			j += 2;
 			current_wc++;
 			length = 0;
@@ -84,20 +78,14 @@ void letter_manager(t_lex *info, char *str, char **line)
 		else
 		{
 			length++;
+			j++;
 			if (is_word_final_basic(str, j)) // eğer kelime bittiyse mallocla yer açılcak
 			{
-				//printf("!!!NORMAL_CHAR -  word: %ld  char: %c length: %ld\n", current_wc, str[j], length);
-				j++;
-				// line[current_wc] = malloc(sizeof(char) * (length + 2));
-				// printf("found size of str %d: %d\n", current_wc, length);
 				line[current_wc] = ft_calloc(4, length + 2);
-				// printf("ZORT :: strlength of line %d: %d\n", current_wc, length);
 				length = 0;
 				current_wc++;
 			}
-			j++;
 		}
-		// printf("letter manager ------  %c\n", str[j]);
 	}
 }
 
@@ -148,9 +136,10 @@ char **lexer(char *str)
 	init_struct(&info, str);
 	check_error(&info, info.main_str);
 	// printf("info.error = %d\n", info.error);
-	if (info.error == 1)
+	if (info.error == true)
 		return (info.error_str);
 	word_manager(&info, info.main_str);
+	info.flags = malloc(sizeof(char) * (info.word_count + 1));
 	// printf("%d\n", info.word_count);
 	info.line = ft_calloc(sizeof(char *), (info.word_count + 1));
 	letter_manager(&info, str, info.line);
@@ -160,5 +149,7 @@ char **lexer(char *str)
 	// 	printf("line %d: %s\n", i, info.line[i]);
 	// 	printf("strlength of line %d: %zu\n", i, ft_strlen(info.line[i]));
 	// }
+	// for (int i = 0; i < info.word_count; i++)
+	// 	printf("word %d :: %c\n", i, info.flags[i]);
 	return (info.line);
 }

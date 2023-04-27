@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/23 14:57:51 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 08:04:38 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,16 @@
 # include <signal.h>
 # include <limits.h>
 
-typedef struct s_lexer
-{
-	bool	d_quote;
-	bool	s_quote;
-	size_t	string_len;
-}	t_lexer;
-
 typedef struct s_shell
 {
 	char		**environments;
 	char		*cwdr;
 	int			pipe_count;
+	int			pipearg_count;
+	char		**pipeargs;
+	char		*echo_n_control;
+	int			echo_n;
+	int			statuscode;
 	t_commander	commander;
 	t_collector	collector;
 }	t_shell;
@@ -53,10 +51,10 @@ typedef struct s_shell
 extern t_shell	g_shell;
 
 //lexer
-bool	update_status(bool *double_quote, bool *single_quote, char c);
-void	skip_quotes(char *input, size_t *string_len, char quote, size_t *index);
-void	lexer_size(char *input, int *i);
-void	lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
+// bool	update_status(bool *double_quote, bool *single_quote, char c);
+// void	skip_quotes(char *input, size_t *string_len, char quote, size_t *index);
+// void	lexer_size(char *input, int *i);
+// void	lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
 
 //signals
 void	signal_handler(int sig);
@@ -86,10 +84,16 @@ char	*return_exec_path(char *exec_name);
 char	*get_env_variable(char *var_name);
 int		if_execexist(char *exec_name);
 
-
 //pipe
-void	init_pipe(char *exec_name, char **pipe_args);
-int		plumber(char *exec_name, char **pipe_args);
-int		pipe_exists(char *input);
+int	pipe_exists(char *input);
+int	pipe_execute(char **pipeargss);
+
+//redirections
+int		redirection_exists(char *line);
+void	redirection_redirector(char **linefornow);
+void	infile(char **args);
+void	outfile(char **args);
+void	append(char **args);
+void	heredoc(char **command, char *delimiter);
 
 #endif

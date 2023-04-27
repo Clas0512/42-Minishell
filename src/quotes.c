@@ -75,7 +75,10 @@ int    quotes_passer(char *str, int *i, char pvt)
 
 int	is_merge_quotes(char *str, int i, char pvt)
 {
-	if ((pvt == 34 || pvt == 39) && str[i] != 0 && str[i] == pvt)
-		return (1);
+	if (str[i] != 0)
+	{
+		if ((pvt == 34 || pvt == 39) && str[i] == pvt)
+			return (1);
+	}
 	return (0);
 }

@@ -6,12 +6,11 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:14 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/21 00:05:51 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:51:36 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 /*initialize collector's variables*/
 void init_collector(t_collector *collector)
 {
@@ -22,7 +21,7 @@ void init_collector(t_collector *collector)
 /*create a collection node variable*/
 t_collection *create_collection(void *address)
 {
-	t_collection *new;
+	t_collection	*new;
 
 	new = malloc(sizeof(t_collection));
 	new->next = NULL;

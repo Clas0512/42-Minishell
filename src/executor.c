@@ -6,31 +6,11 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/23 14:52:49 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:20:06 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_env_variable(char *var_name)
-{
-	int		i;
-	char	*var;
-	char	*temp;
-
-	i = 0;
-	while (g_shell.environments[i])
-	{
-		temp = g_shell.environments[i];
-		if (ft_strncmp(temp, var_name, ft_strlen(var_name)) == 0)
-		{
-			var = ft_substr(temp, ft_strlen(var_name) + 1, ft_strlen(temp));
-			return (var);
-		}
-		i++;
-	}
-	return (NULL);
-}
 
 char	*get_full_path(char *path, char *c, char *exec_name)
 {
@@ -44,14 +24,14 @@ char	*get_full_path(char *path, char *c, char *exec_name)
 
 int	if_execexist(char *exec_name)
 {
-	if (exec_name == NULL)
-		return (0);
 	char	*path;
 	char	*full_path;
 	char	*path_var;
 	char	**path_list;
 	int		i;
 
+	if (exec_name == NULL)
+		return (0);
 	path_var = get_env_variable("PATH");
 	if (!path_var)
 		return (-1);
@@ -116,40 +96,28 @@ int	execute(char *exec_name, char **args)
 {
 	pid_t	pid;
 	int		wstatus;
-	int		statuscode;
-	char	*full_path_to_exec;
-	char	**path_and_args; 
+	char	**path_and_args;
 
-	if (if_execexist(exec_name) == 1)
+	path_and_args = combine_path_and_args(return_exec_path(exec_name), args);
+	pid = fork();
+	if (pid == 0)
 	{
-		full_path_to_exec = return_exec_path(exec_name);
-		path_and_args = combine_path_and_args(full_path_to_exec, args);
-		pid = fork();
-		if (pid == 0)
+		if (execve(return_exec_path(exec_name), path_and_args, NULL) == -1)
 		{
-			if (execve(full_path_to_exec, path_and_args, NULL) == -1)
-			{
-				if (if_execexist(exec_name) == 1)
-					printf("%s Permission Denied : %s\n", g_shell.cwdr, exec_name);
-			}
-			exit(EXIT_FAILURE);
+			if (if_execexist(exec_name) == 1)
+				printf("%s Permission Denied : %s\n", g_shell.cwdr, exec_name);
 		}
-		else if (pid < 0)
-		{
-			perror("Child Process Failed.");
-		}
-		else
-		{
-			waitpid(pid, &wstatus, WUNTRACED);
-			if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
-			{
-				statuscode = WEXITSTATUS(wstatus);
-				printf("%s %d: %s: %s\n", g_shell.cwdr, statuscode, exec_name, strerror(statuscode));
-				return (1);
-			}
-		}
+		exit(EXIT_FAILURE);
 	}
+	else if (pid < 0)
+		perror("Child Process Failed.");
 	else
-		printf("%s: %s: command not found : %s\n", g_shell.cwdr, exec_name, strerror(127));
+	{
+		waitpid(pid, &wstatus, WUNTRACED);
+		g_shell.statuscode = WEXITSTATUS(wstatus);
+		printf("Exit status: %d, statuscode = %d\n", WEXITSTATUS(wstatus), g_shell.statuscode);
+		if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
+			return (1);
+	}
 	return (0);
 }
