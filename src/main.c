@@ -6,32 +6,25 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 12:00:12 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:09:06 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 /* 
-//add cwdr etc. to global variable for the aesthetics. (Done and Done)
 //FIX THE AESTHETICS OF THE EXIT COMMAND (done)
 // Echo Doesn't prints more than 2 words, i f-ed it up with removing ac, dear future me handle that plox.
 // 																			^^ ^ ^^ don't worry kiddo, i gotcha ;) <3
-//Add the other commands(done)
 //ADD PATH CONTROL TO EXECUTOR <---- DONE BABYBOY, LOVE YA */
 //FIX THE WILDCARDS IN MAKEFILE!!!!!!
 //FIX THE INFILE OUTCOME
 //Refactor
 //Add the bonus
-//CLEAN UP REDIRECTIONS
 //Add the leaks to collector
 //Check the norm
 //Check the leaks
 //Move the files to the right folders and change the makefile
-// init_env is not working properly, order is changing while on a new prompt thats called with system call check why
-// system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
-//Pipe has heap overflow, deal with it, refactor it, make it better, make it work, make it right. And don't forget the Norm <3
 //redirections, pipe collector, command, main norm is not fixed
-//make $?  
 //fix echo dsfgdfsg$PATHdfgsd
 //append & l"s" ''''-l | "w"c"
 
@@ -72,14 +65,11 @@ void	init_collection(void)
 void	read_the_line(char *line, char **linefornow)
 {	
 	if (check_syntax_redir(linefornow) == 0)
-	{
 		printf("Syntax error near unexpected token\n");
-		g_shell.exit_status = 0;
-	}
 	else if (check_exit_status(linefornow) == 0)
-		;
+		return ;
 	else if (check_syntax_builtin(linefornow) == 0)
-		;
+		return ;
 	else if (redirection_exists(line) == 0)
 		redirection_redirector(linefornow);
  	else if (pipe_exists(line) == 0)
@@ -96,7 +86,6 @@ void	read_the_line(char *line, char **linefornow)
 		g_shell.exit_status = 127;
 	}
 }
-
 
 int	main(int ac, char **av, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:36:12 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 11:59:34 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:08:58 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	check_syntax_builtin(char **linefornow)
 		g_shell.exit_status = 0;
 		return (0);
 	}
+	g_shell.exit_status = 258;
 	return (1);
 }
 
