@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:36:12 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 11:53:11 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:59:34 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ int	check_exit_status(char **linefornow)
 			return (0);
 		}
 	}
-	else if (ft_strncmp(linefornow[0], "$=", 2) == 0)
+	else if (ft_strncmp(linefornow[0], "$?", 2) == 0)
 	{
-		printf("%d\n", g_shell.exit_status);
+		printf("%s Command not found : %d\n",g_shell.cwdr, g_shell.exit_status);
 		g_shell.exit_status = 127;
 		return (0);
 	}
