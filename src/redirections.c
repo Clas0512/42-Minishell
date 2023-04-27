@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 05:01:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 21:00:00 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:48:32 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	**her_sep(char **linefornow)
 		i++;
 	}
 	heredoc = (char **)malloc(sizeof(char *) * (i + 1));
+	create_collection(heredoc);
 	i = -1;
 	while (linefornow[++i])
 	{

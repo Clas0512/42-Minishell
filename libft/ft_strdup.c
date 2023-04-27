@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:30:23 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/03/03 04:55:41 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:41:21 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ char	*ft_strdup(const char *s)
 		i++;
 	}
 	dest[i] = '\0';
+	create_collection(dest);
 	return ((char *)dest);
 }

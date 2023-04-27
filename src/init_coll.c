@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 21:08:27 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 21:11:30 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:45:36 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	init_env(void)
 void	pipe_execute_init(int mod)
 {
 	if (mod == 1)
+	{
 		g_shell.pipe.pipes = malloc(sizeof(int) * g_shell.pipe.num_pipes * 2);
+		create_collection(g_shell.pipe.pipes);
+	}
 	else
 	{
 		g_shell.pipe.num_pipes = 0;

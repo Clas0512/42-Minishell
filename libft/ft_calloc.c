@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:26:48 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/03/14 07:40:42 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:42:21 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void	*ft_calloc(size_t count, size_t size)
 	if (!ptr)
 		return (0);
 	ft_bzero(ptr, count * size);
+	create_collection(ptr);
 	return (ptr);
 }

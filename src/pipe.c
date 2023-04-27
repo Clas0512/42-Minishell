@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 18:56:12 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:48:03 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	pipe_execute_cutter(char **pipeargss)
 		g_shell.pipe.end++;
 	g_shell.pipe.args = malloc(sizeof(char *)
 			* (g_shell.pipe.end - g_shell.pipe.start + 1));
+	create_collection(g_shell.pipe.args);
 	g_shell.pipe.i = g_shell.pipe.start;
 	while (g_shell.pipe.i < g_shell.pipe.end)
 	{

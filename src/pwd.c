@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:43 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/22 04:07:28 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:48:17 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*get_pwd(void)
 		if (ft_strncmp(envtmp[i], "PWD=", 4) == 0)
 		{
 			pwd = malloc(sizeof(char) * (ft_strlen(envtmp[i]) - 3));
+			create_collection(pwd);
 			while (j < ft_strlen(envtmp[i]) - 4)
 			{
 				pwd[j] = envtmp[i][j + 4];

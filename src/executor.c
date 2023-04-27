@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 20:04:42 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:43:47 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	**combine_path_and_args(char *full_path_to_exec, char **args)
 	i = 0;
 	j = (ft_strlen(full_path_to_exec) + ft_strlen(args[0]) + 1);
 	path_and_args = malloc(sizeof(char *) * j);
+	create_collection(path_and_args);
 	path_and_args[i] = ft_strdup(full_path_to_exec);
 	i++;
 	while (args[i])

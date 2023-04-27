@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 23:12:40 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:35:17 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 # include "../libft/libft.h"
 # include "redirection.h"
 # include "collector.h"
-# include "command.h"
-# include "string.h"
-# include "pipe.h"
 # include "lexer.h"
+# include "pipe.h"
 # include "redirection.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -46,7 +44,6 @@ typedef struct s_shell
 	char		*echo_n_control;
 	int			echo_n;
 	int			exit_status;
-	t_commander	commander;
 	t_collector	collector;
 	t_pipe		pipe;
 	t_redir		redir;

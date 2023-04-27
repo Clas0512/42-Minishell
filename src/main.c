@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 23:17:01 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/28 00:12:17 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	init_collection(void)
 {
 	init_env();
 	init_collector(&g_shell.collector);
-	init_commander(&g_shell.commander);
 	init_signal();
 }
 
