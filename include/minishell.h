@@ -6,7 +6,7 @@
 /*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 10:23:06 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:36:06 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "redirection.h"
 # include "collector.h"
 # include "command.h"
-# include "pipe.h"
 # include "string.h"
+# include "pipe.h"
 # include "lexer.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -44,19 +44,13 @@ typedef struct s_shell
 	char		**pipeargs;
 	char		*echo_n_control;
 	int			echo_n;
-	int			statuscode;
+	int			exit_status;
 	t_commander	commander;
 	t_collector	collector;
 	t_pipe		pipe;
 }	t_shell;
 
 extern t_shell	g_shell;
-
-//lexer
-// bool	update_status(bool *double_quote, bool *single_quote, char c);
-// void	skip_quotes(char *input, size_t *string_len, char quote, size_t *index);
-// void	lexer_size(char *input, int *i);
-// void	lexer_template(t_lexer *lex, char *input, void (*f)(t_lexer, int *));
 
 //signals
 void	signal_handler(int sig);
@@ -77,7 +71,7 @@ void	change_directory(char **cdargs);
 char	*get_env(char *env);
 
 //promptline
-void	read_the_line(char *line, char **linefornow, int ac);
+void	read_the_line(char *line, char **linefornow);
 
 //executor
 char	*get_full_path(char *path, char *c, char *exec_name);
@@ -87,8 +81,10 @@ char	*get_env_variable(char *var_name);
 int		if_execexist(char *exec_name);
 
 //pipe
-int	pipe_exists(char *input);
-int	pipe_execute(char **pipeargss);
+int		pipe_exists(char *input);
+void	pipe_execute(char **pipeargss);
+void	parent_proc();
+void	child_proc();
 
 //redirections
 int		redirection_exists(char *line);
@@ -97,5 +93,12 @@ void	infile(char **args);
 void	outfile(char **args);
 void	append(char **args);
 void	heredoc(char **command, char *delimiter);
+
+//sytnax
+int	check_syntax_builtin(char **linefornow);
+int check_syntax_builtin2(char **linefornow);
+int check_syntax_builtin3(char **linefornow);
+int	check_syntax_redir(char **linefornow);
+int	check_exit_status(char **linefornow);
 
 #endif

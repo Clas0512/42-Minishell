@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   init_coll.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/18 00:01:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 09:57:38 by aerbosna         ###   ########.fr       */
+/*   Created: 2023/04/26 21:08:27 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/26 21:09:19 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	init_env(void)
 {
-	if (n == 0 || !s1 || !s2)
+	int			i;
+	char		*env;
+	extern char	**environ;
+
+	i = 0;
+	while (environ[i])
+		i++;
+	g_shell.environments = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (environ[i])
 	{
-		return (0);
+		env = ft_strdup(environ[i]);
+		g_shell.environments[i] = env;
+		i++;
 	}
-	while ((unsigned char)*s1 == (unsigned char)*s2 && *s1 != '\0' && n - 1 > 0)
-	{
-		s1++;
-		s2++;
-		n--;
-	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
+	g_shell.environments[i] = NULL;
 }

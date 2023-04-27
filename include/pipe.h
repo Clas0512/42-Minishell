@@ -11,6 +11,7 @@ typedef struct s_pipe
 	int		end;
 	int		i;
 	char	**args;
+	int		*pipes;
 	pid_t	pid;
 }	t_pipe;
 

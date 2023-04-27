@@ -6,7 +6,7 @@
 /*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 09:25:13 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:14:07 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,42 +30,12 @@
 // init_env is not working properly, order is changing while on a new prompt thats called with system call check why
 // system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
 //Pipe has heap overflow, deal with it, refactor it, make it better, make it work, make it right. And don't forget the Norm <3
-//env, redirections, export, collector, command, main norm is not fixed
+//redirections, pipe collector, command, main norm is not fixed
 //make $?  
 //fix echo dsfgdfsg$PATHdfgsd
+//append & l"s" ''''-l | "w"c"
 
 t_shell	g_shell;
-
-
-void	read_the_line(char *line, char **linefornow, int ac)
-{	
-	if (ft_strncmp(line, "exit", 4) == 0)
-		exit_minishell(linefornow);
-	else if (ft_strncmp(line, "clear", 5) == 0)
-		system("clear");
-	else if (ft_strncmp(line, "echo", 4) == 0)
-		echo(ac, linefornow);
-	else if (ft_strncmp(line, "pwd", 3) == 0)
-		pwd();
-	else if (ft_strncmp(line, "env", 3) == 0 || ft_strncmp(line, "ENV", 3) == 0)
-		print_env();
-	else if (ft_strncmp(line, "unset", 5) == 0)
-		unset_env(linefornow);
-	else if (ft_strncmp(line, "export", 6) == 0)
-		export_env(linefornow);
-	else if (ft_strncmp(line, "cd", 2) == 0)
-		change_directory(linefornow);
-	else if (redirection_exists(line) == 0)
-		redirection_redirector(linefornow);
- 	else if (pipe_exists(line) > 0)
-		pipe_execute(linefornow);
-	else if (if_execexist(linefornow[0]) == 1)
-		execute(linefornow[0], linefornow);
-	else if (linefornow[0] == NULL)
-		return ;
-	else
-		printf("%s Command not found: %s\n", g_shell.cwdr, line);
-}
 
 void	open_terminal(char *av)
 {
@@ -88,6 +58,7 @@ void	open_terminal(char *av)
 void	flush_the_terminal(void)
 {
 	printf("\033[1;1H\033[2J");
+	g_shell.exit_status = 0;
 }
 
 void	init_collection(void)
@@ -98,12 +69,48 @@ void	init_collection(void)
 	init_signal();
 }
 
+
+
+void	read_the_line(char *line, char **linefornow)
+{	
+	if (linefornow[0] == NULL)
+		return ;
+	else if (check_syntax_redir(linefornow) == 0)
+	{
+		printf("%s Syntax error near unexpected token\n", g_shell.cwdr);
+		g_shell.exit_status = 258;
+	}
+ 	else if (linefornow[0][0] == '\0')
+	{
+		printf("%s Command not found:\n", g_shell.cwdr);
+		g_shell.exit_status = 127;
+	}
+	else if (check_exit_status(linefornow) == 0)
+		return ;
+	else if (check_syntax_builtin(linefornow) == 0)
+		return ;
+	else if (redirection_exists(line) == 0)
+		redirection_redirector(linefornow);
+ 	else if (pipe_exists(line) == 0)
+		pipe_execute(linefornow);
+	else if (ft_strncmp(linefornow[0], "clear", 5) == 0)
+		flush_the_terminal();
+	else if (if_execexist(linefornow[0]) == 1)
+		execute(linefornow[0], linefornow);
+	else
+	{
+		printf("%s Command not found: %s\n", g_shell.cwdr, line);
+		g_shell.exit_status = 127;
+	}
+}
+
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	char	**linefornow;
 
-	open_terminal(av[0]);
+	// open_terminal(av[0]);
 	(void)ac;
 	(void)av;
 	(void)envp;
@@ -114,10 +121,13 @@ int	main(int ac, char **av, char **envp)
 		g_shell.cwdr = ft_strjoin(getcwd(NULL, 0), " | minishell> ");
 		line = readline(g_shell.cwdr);
 		if (line == NULL)
+		{
+			printf("%s exit", g_shell.cwdr);
 			exit(0);
+		}
 		linefornow = lexer(line);
 		add_history(line);
-		read_the_line(line, linefornow, ac);
+		read_the_line(line, linefornow);
 		free(line);
 		free(linefornow);
 		free(g_shell.cwdr);

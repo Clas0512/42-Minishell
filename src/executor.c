@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 18:20:06 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:58:57 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,9 @@ int	execute(char *exec_name, char **args)
 	else
 	{
 		waitpid(pid, &wstatus, WUNTRACED);
-		g_shell.statuscode = WEXITSTATUS(wstatus);
-		printf("Exit status: %d, statuscode = %d\n", WEXITSTATUS(wstatus), g_shell.statuscode);
 		if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
 			return (1);
+		g_shell.exit_status = wstatus;
 	}
 	return (0);
 }

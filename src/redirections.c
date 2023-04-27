@@ -6,14 +6,13 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 05:01:52 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 17:23:36 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 00:46:01 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //FIX THE INFILE OUTCOME
 
-//checks to see if the command has a redirection
 int	redirection_exists(char *line)
 {
 	int	i;
@@ -28,7 +27,6 @@ int	redirection_exists(char *line)
 	return (1);
 }
 
-//checks to see if the command is infile, outfile, append or heredoc
 void	redirection_redirector(char **linefornow)
 {
 	int	i;
@@ -94,39 +92,43 @@ void	infile(char **args)
 		waitpid(pid, &status, 0);
 }
 
-void	outfile(char **args) 
+void	outfile_childe(char **args)
 {
-	char	*output;
+	int	i;
+	char *output;
+	int	fd;
+	
+	i = 0;
+	output = NULL;
+	while (args[i] != NULL)
+	{
+		if (ft_strncmp(args[i], ">", 1) == 0)
+		{
+			output = args[i + 1];
+			args[i] = NULL;
+			break ;
+		}
+		i++;
+	}
+	fd = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		exit(EXIT_FAILURE);
+	if (dup2(fd, STDOUT_FILENO) == -1)
+		exit(EXIT_FAILURE);
+	execute(args[0], args);
+	exit(EXIT_FAILURE);
+}
+
+void	outfile(char **args)
+{
 	int		status;
-	int		fd;
-	int		i;
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
-	{
-		i = 0;
-		output = NULL;
-		while (args[i] != NULL)
-		{
-			if (ft_strncmp(args[i], ">", 1) == 0)
-			{
-				output = args[i + 1];
-				args[i] = NULL;
-				break ;
-			}
-			i++;
-		}
-		fd = open(output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd == -1)
-			exit(EXIT_FAILURE);
-		if (dup2(fd, STDOUT_FILENO) == -1)
-			exit(EXIT_FAILURE);
-		execute(args[0], args);
-		exit(EXIT_FAILURE);
-	}
+		outfile_childe(args);
 	else
 		waitpid(pid, &status, 0);
 }
@@ -157,15 +159,28 @@ void	append(char **args)
 	exit(EXIT_FAILURE);
 }
 
+void	heredoc_childe(char **args, const char *tmp_filename)
+{
+	int	input_fd;
+
+	input_fd = open(tmp_filename, O_RDONLY);
+	if (input_fd == -1)
+		exit(1);
+	if (dup2(input_fd, STDIN_FILENO) == -1)
+		exit(1);
+	close(input_fd);
+	execute(args[0], args);
+	exit(1);
+}
+
 void	heredoc(char **args, char *delimiter)
 {
 	int			delimiter_found;
 	char		*line;
-	const char	tmp_filename[] = "/tmp/heredoc.tmp";
+	const char	tmp_filename[] = "/tmp/heredoc.tmp";//BERKE
 	int			tmp_fd;
 	pid_t		pid;
 	int			status;
-	int			input_fd;
 
 	tmp_fd = open(tmp_filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	delimiter_found = 1;
@@ -188,16 +203,7 @@ void	heredoc(char **args, char *delimiter)
 	close(tmp_fd);
 	pid = fork();
 	if (pid == 0)
-	{
-		input_fd = open(tmp_filename, O_RDONLY);
-		if (input_fd == -1)
-			exit(1);
-		if (dup2(input_fd, STDIN_FILENO) == -1)
-			exit(1);
-		close(input_fd);
-		execute(args[0], args);
-		exit(1);
-	}
+		heredoc_childe(args, tmp_filename);
 	else
 		waitpid(pid, &status, 0);
 	unlink(tmp_filename);

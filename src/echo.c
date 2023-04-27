@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 09:10:53 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/26 09:45:59 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	echo_control(char *arg)
 	return (0);
 }
 
-void	echo(int ac, char **av) // if input is """ it fail.
+void	echo(int ac, char **av)
 {
 	int	i;
 	int	j;

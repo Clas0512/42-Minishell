@@ -34,7 +34,8 @@ void    init_struct(t_lex *info, char *str)
 	info->b = 0;
 	info->error = false;
 	info->error_str = malloc(sizeof(char *) * 2);
-	info->error_str[0] = ft_strdup("ERROR");
+	// info->error_str[0] = ft_strdup("ERROR");
+	info->error_str[0] = NULL;
 }
 
 void letter_manager(t_lex *info, char *str, char **line)
@@ -96,16 +97,11 @@ void    word_manager(t_lex *info, char *str)
     i = 0;
     while (i < info->strlen && str[i] != '\0')
     {
-        // printf("*** %d ***\n", info->strlen);
-        // exit(1);
-        // printf("-*- %c -*- detected in %d and word count = %d\n", str[i], i, info->word_count);
         if (str[i] == 32)
             i++;
         else if (str[i] == 34 || str[i] == 39)
         {
-            // printf("before quotes passer %d\n", i);
             info->word_count += quotes_passer(str, &i, str[i]);
-            // printf("after quotes passer %d\n", i);
             if (str[i] == '\0')
             while (str[i] != 32 && str[i] != '\0' && is_rdrct(str, i) != 0)
                 i++;
@@ -135,7 +131,6 @@ char **lexer(char *str)
 
 	init_struct(&info, str);
 	check_error(&info, info.main_str);
-	// printf("info.error = %d\n", info.error);
 	if (info.error == true)
 		return (info.error_str);
 	word_manager(&info, info.main_str);
@@ -144,11 +139,6 @@ char **lexer(char *str)
 	info.line = ft_calloc(sizeof(char *), (info.word_count + 1));
 	letter_manager(&info, str, info.line);
 	set_line(&info, str, info.line);
-	// for (int i = 0; i < info.word_count; i++)
-	// {
-	// 	printf("line %d: %s\n", i, info.line[i]);
-	// 	printf("strlength of line %d: %zu\n", i, ft_strlen(info.line[i]));
-	// }
 	// for (int i = 0; i < info.word_count; i++)
 	// 	printf("word %d :: %c\n", i, info.flags[i]);
 	return (info.line);

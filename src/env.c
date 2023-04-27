@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:24 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 18:11:37 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:08:17 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@ void	print_env(void)
 	}
 }
 
+char	*tmp_filler(char *tmp, int j, int i)
+{
+	int	k;
+
+	k = ft_strlen(g_shell.environments[i]) - j;
+	if (ft_strncmp(tmp, "HOME=", 5) == 0)
+	{
+		tmp = ft_substr(g_shell.environments[i], j, k);
+		return (tmp);
+	}
+	i = 0;
+	while (tmp[i] != '\0' && tmp[i + j] != '\0')
+	{
+		tmp[i] = tmp[i + j];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
+
 char	*get_env(char *env)
 {
 	int		i;
@@ -37,18 +57,7 @@ char	*get_env(char *env)
 	{
 		if (ft_strncmp(g_shell.environments[i], env, j) == 0)
 		{
-			if (ft_strncmp(tmp, "HOME=", 5) == 0)
-			{
-				tmp = ft_substr(g_shell.environments[i], j, ft_strlen(g_shell.environments[i]) - j);
-				return (tmp);
-			}
-			i = 0;
-			while (tmp[i] != '\0' && tmp[i + j] != '\0')
-			{
-				tmp[i] = tmp[i + j];
-				i++;
-			}
-			tmp[i] = '\0';
+			tmp = tmp_filler(tmp, j, i);
 			return (tmp);
 		}
 		i++;
@@ -74,26 +83,6 @@ void	set_env(char *env, char *str)
 		}
 		i++;
 	}
-}
-
-void	init_env(void)
-{
-	int			i;
-	char		*env;
-	extern char	**environ;
-
-	i = 0;
-	while (environ[i])
-		i++;
-	g_shell.environments = (char **)malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (environ[i])
-	{
-		env = ft_strdup(environ[i]);
-		g_shell.environments[i] = env;
-		i++;
-	}
-	g_shell.environments[i] = NULL;
 }
 
 char	*get_env_variable(char *var_name)
