@@ -6,7 +6,7 @@
 /*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 08:04:38 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 10:23:06 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "redirection.h"
 # include "collector.h"
 # include "command.h"
+# include "pipe.h"
 # include "string.h"
 # include "lexer.h"
 # include <readline/readline.h>
@@ -46,6 +47,7 @@ typedef struct s_shell
 	int			statuscode;
 	t_commander	commander;
 	t_collector	collector;
+	t_pipe		pipe;
 }	t_shell;
 
 extern t_shell	g_shell;

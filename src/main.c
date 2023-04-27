@@ -6,7 +6,7 @@
 /*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 03:49:22 by anargul          ###   ########.fr       */
+/*   Updated: 2023/04/27 09:25:13 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	read_the_line(char *line, char **linefornow, int ac)
 		exit_minishell(linefornow);
 	else if (ft_strncmp(line, "clear", 5) == 0)
 		system("clear");
-	else if (ft_strncmp(line, "echo", 4) == 0
-		|| ft_strncmp(line, "ECHO", 4) == 0)
+	else if (ft_strncmp(line, "echo", 4) == 0)
 		echo(ac, linefornow);
 	else if (ft_strncmp(line, "pwd", 3) == 0)
 		pwd();
@@ -104,7 +103,7 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	char	**linefornow;
 
-	// open_terminal(av[0]);
+	open_terminal(av[0]);
 	(void)ac;
 	(void)av;
 	(void)envp;

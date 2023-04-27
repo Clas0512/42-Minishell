@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 12:40:17 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:33:05 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,91 +26,86 @@ int	pipe_exists(char *line)
 	return (0);
 }
 
+void	pipe_execute_init()
+{
+	g_shell.pipe.num_pipes = 0;
+	g_shell.pipe.pipeargs_idx = 0;
+	g_shell.pipe.args = NULL;
+	g_shell.pipe.start = 0;
+	g_shell.pipe.end = 0;
+	g_shell.pipe.pipe_idx = 0;
+	g_shell.pipe.i = 0;
+}
+
 int	pipe_execute(char **pipeargss)
 {
-	int		num_pipes;
-	int		pipeargs_idx;
-	int		pipe_idx;
-	int		wstatus;
-	int		start;
-	int		end;
-	int		i;
-	char	**args;
-	pid_t	pid;
-
-	num_pipes = 0;
-	pipeargs_idx = 0;
-	args = NULL;
-	while (pipeargss[pipeargs_idx] != NULL)
+	pipe_execute_init();
+	while (pipeargss[g_shell.pipe.pipeargs_idx] != NULL)
 	{
-		if (ft_strncmp(pipeargss[pipeargs_idx], "|", 1) == 0)
-			num_pipes++;
-		pipeargs_idx++;
+		if (ft_strncmp(pipeargss[g_shell.pipe.pipeargs_idx], "|", 1) == 0)
+			g_shell.pipe.num_pipes++;
+		g_shell.pipe.pipeargs_idx++;
 	}
-	int	pipes[num_pipes * 2];
-	i = 0;
-	while (i < num_pipes)
+	int	pipes[g_shell.pipe.num_pipes * 2];
+	while (g_shell.pipe.i < g_shell.pipe.num_pipes)
 	{
-		if (pipe(pipes + i * 2) < 0)
+		if (pipe(pipes + g_shell.pipe.i * 2) < 0)
 			return (-1);
-		i++;
+		g_shell.pipe.i++;
 	}
-	start = 0;
-	end = 0;
-	pipe_idx = 0;
-	while (pipeargss[end] != NULL)
-	{//Find the end of the curr comm
-		while (pipeargss[end] != NULL && ft_strncmp(pipeargss[end], "|", 1) != 0)
-			end++;
+	while (pipeargss[g_shell.pipe.end] != NULL)
+	{//Find the g_shell.pipe.end of the curr comm
+		while (pipeargss[g_shell.pipe.end] != NULL && ft_strncmp(pipeargss[g_shell.pipe.end], "|", 1) != 0)
+			g_shell.pipe.end++;
 		//Set up the args for the curr comm
-		args = malloc(sizeof(char *) * (end - start + 1));
-		i = start;
-		while (i < end)
+		g_shell.pipe.args = malloc(sizeof(char *) * (g_shell.pipe.end - g_shell.pipe.start + 1));
+		g_shell.pipe.i = g_shell.pipe.start;
+		while (g_shell.pipe.i < g_shell.pipe.end)
 		{
-			args[i - start] = pipeargss[i];
-			i++;
+			g_shell.pipe.args[g_shell.pipe.i - g_shell.pipe.start] = pipeargss[g_shell.pipe.i];
+			g_shell.pipe.i++;
 		}
-		args[end - start] = NULL;
-		pid = fork();
-		if (pid < 0)
+		g_shell.pipe.args[g_shell.pipe.end - g_shell.pipe.start] = NULL;
+		g_shell.pipe.pid = fork();
+		if (g_shell.pipe.pid < 0)
 			return (-1);
-		else if (pid == 0)
+		else if (g_shell.pipe.pid == 0)
 		{// Childé
-			if (pipe_idx > 0)// Set up input redir from the prev comm
+			if (g_shell.pipe.pipe_idx > 0)// Set up input redir from the prev comm
 			{
-				if (dup2(pipes[(pipe_idx-1)*2], STDIN_FILENO) < 0)
+				if (dup2(pipes[(g_shell.pipe.pipe_idx-1)*2], STDIN_FILENO) < 0)
 					return (-1);
 			}
-			if (pipe_idx < num_pipes)// Set up outp redir to the next comm
+			if (g_shell.pipe.pipe_idx < g_shell.pipe.num_pipes)// Set up outp redir to the next comm
 			{
-				if (dup2(pipes[pipe_idx*2+1], STDOUT_FILENO) < 0)
+				if (dup2(pipes[g_shell.pipe.pipe_idx*2+1], STDOUT_FILENO) < 0)
 					return (-1);
 			}
-			i = 0;
-			while (i < num_pipes * 2)
+			g_shell.pipe.i = 0;
+			while (g_shell.pipe.i < g_shell.pipe.num_pipes * 2)
 			{
-				close (pipes[i]);
-				i++;
+				close (pipes[g_shell.pipe.i]);
+				g_shell.pipe.i++;
 			}
-			if (execute(args[0], args) != 0)
+			if (execute(g_shell.pipe.args[0], g_shell.pipe.args) != 0)
 				exit (EXIT_FAILURE);
 			exit (EXIT_SUCCESS);
 		}
 		else
 		{//Par.proc.
-			if (pipe_idx > 0)//Close the inp end of the prev pipe
-				close(pipes[(pipe_idx-1)*2]);
-			if (pipe_idx < num_pipes)// Close the outp end of the curr pipe
-				close(pipes[pipe_idx*2+1]);
-			if (waitpid(pid, &wstatus, 0) < 0)
+			if (g_shell.pipe.pipe_idx > 0)//Close the inp g_shell.pipe.end of the prev pipe
+				close(pipes[(g_shell.pipe.pipe_idx-1)*2]);
+			if (g_shell.pipe.pipe_idx < g_shell.pipe.num_pipes)// Close the outp g_shell.pipe.end of the curr pipe
+				close(pipes[g_shell.pipe.pipe_idx*2+1]);
+			if (waitpid(g_shell.pipe.pid, &g_shell.pipe.wstatus, 0) < 0)
 				return (-1);
-			if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
+			if (WIFEXITED(g_shell.pipe.wstatus) && WEXITSTATUS(g_shell.pipe.wstatus) != 0)
 				return (-1);
 		}
-		start = end + 1;
-		if (pipeargss[end] != NULL)
-			end = start;
-		pipe_idx++;
+		g_shell.pipe.start = g_shell.pipe.end + 1;
+		if (pipeargss[g_shell.pipe.end] != NULL)
+			g_shell.pipe.end = g_shell.pipe.start;
+		g_shell.pipe.pipe_idx++;
 	}
 	return (0);
 }
