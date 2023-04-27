@@ -32,7 +32,6 @@ int	quotes_counter_spcl(char *str, char pvt, int i)
 	r = 0;
 	while (i >= 0)
 	{
-		// printf("\"%c\" in %d \n", str[i], i);
 		if (str[i] == pvt)
 			r++;
 		i--;

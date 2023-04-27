@@ -26,16 +26,10 @@ void    invld_quotes_str(t_lex *info)
             quotes_counter(info, i);
             if ((info->d_q % 2 == 1) && (i < info->strlen - 1) && str[i] == 34 && str[i + 1] == 34 &&
                 (str[i + 2] == '\0' || str[i + 2] == 32) && str[i + 2] != 34)
-                {
-                    // printf("invalid_str1 -- %ld\n", i);
                     info->word_count--;
-                }
             else if ((info->s_q % 2 == 1) && (i < info->strlen - 1) && str[i] == 39 && str[i + 1] == 39 &&
                 (str[i + 2] == '\0' || str[i + 2] == 32) && str[i + 2] != 39)
-                {
-                    // printf("invalid_str2 -- %ld\n", i);
                     info->word_count--;
-                }
         }
         i++;
     }

@@ -1,24 +1,38 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+# include "minishell.h"
+# include <stdbool.h>
+
+typedef struct s_manager
+{
+	int	length;
+	int	current_wc;
+	int	j;
+	int	r;
+}			t_manager;
+
 typedef struct s_lex
 {
-	void	*main_str;
-	char	*flags;
-	long	d_q;
-	long	s_q;
-	char	last_quotes;
-	int		strlen;
-	int		word_count;
-	char	starter_quotes;
-	char	**main_line;
-	char    **line;
-	int     a;
-	int		b;
-	int		error;
-	char	**error_str;
-}		t_lex;
+	char		*main_str;
+	char		*flags;
+	long		d_q;
+	long		s_q;
+	char		last_quotes;
+	int			strlen;
+	int			word_count;
+	char		starter_quotes;
+	char		**main_line;
+	char	    **line;
+	int 	    a;
+	int			b;
+	bool		error;
+	int			last_quotes_count;
+	char		**error_str;
+	t_manager	manager;
+}			t_lex;
 
+void	helper(t_lex *info, int r, char mod);
 char    **lexer(char *str);
 int		letter_counter_in_quotes(char *str, char pvt, int *i);
 int		quotes_passer(char *str, int *i, char pvt);

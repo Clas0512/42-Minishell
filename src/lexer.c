@@ -11,7 +11,6 @@ void    init_struct(t_lex *info, char *str)
 	info->a = 0;
 	info->b = 0;
 	info->error = false;
-	info->error_str[0] = NULL;
 }
 
 void	check_error(t_lex *info, char *str)
@@ -57,7 +56,7 @@ void letter_manager(t_lex *info, char *str)
 		else if (str[info->manager.j] == 34 || str[info->manager.j] == 39)
 		{
 			info->manager.length += letter_counter_in_quotes(str, str[info->manager.j], &info->manager.j);
-			if (is_word_final_quotes(str, info->manager.j))
+			if (is_word_final_quotes(str, info->manager.j)) 
 				helper(info, info->manager.r, 0);
 		} 
 		else if (info->manager.r != 0)
@@ -118,7 +117,6 @@ void    word_manager(t_lex *info, char *str)
             i++;
         }
     }
-	// printf("word count : %d\n", info->word_count);
 }
 
 void	change_main_str(t_lex *info)
@@ -157,7 +155,6 @@ char **lexer(char *str)
 	}
 	word_manager(&info, info.main_str);
 	info.flags = malloc(sizeof(char) * (info.word_count + 1));
-	// printf("wc : %d\n", info.word_count);
 	info.line = ft_calloc(sizeof(char *), (info.word_count + 1));
 	init_manager_struct(&info);
 	letter_manager(&info, info.main_str);

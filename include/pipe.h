@@ -1,8 +1,6 @@
 #ifndef PIPE_H
 # define PIPE_H
 
-#include "minishell.h"
-
 typedef struct s_pipe
 {
 	int		num_pipes;

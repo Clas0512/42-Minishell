@@ -4,21 +4,15 @@ int  setter_in_quotes(t_lex *info, char *str, char *line, char pvt)
 {
 	info->last_quotes = pvt;
 	info->a++;
-	// printf("-*- %c -*-\n", str[info->b]);
-	// printf("-*- %c -*-\n", line[info->b]);
 	while (str[info->a] != pvt)
 	{
-		// printf("------> line c: %d   str c: %d\n", info->b, info->a);
 		line[info->b] = str[info->a];
 		info->a++;
 		info->b++;
-		// if (str[info->a] == pvt && is_merge_quotes(str, info->a + 2))
-		// 	setter_in_quotes(info, str, line, pvt);
 	}
 	info->a++;
 	if (str[info->a] == pvt)
 		setter_in_quotes(info, str, line, pvt);
-	// printf("str: %s\n", line);
 	if (str[info->a] != 32 && str[info->a] != 0 && is_rdrct(str, info->a) == 0)
 		return (0);
 	return (1);
@@ -81,7 +75,6 @@ void    set_line(t_lex *info, char *str, char **line)
 		}
 		else if (32 < str[info->a] && str[info->a] < 127)
 		{
-			// printf("%p\n", line[wd]);
 			wd += setter_in_word(info, str, line[wd]);
 			if (wd_past != wd)
 				tokenize_q_str(info, wd_past, 'C');
