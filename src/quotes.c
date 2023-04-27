@@ -50,26 +50,18 @@ int    quotes_passer(char *str, int *i, char pvt)
         *i += 1;
         return (1);
     }
-    while (!(q % 2 == 0 && (str[*i] == 32 || str[*i] == '\0')))
+    while (!(q % 2 == 0 && (str[*i] == 32 || str[*i] == '\0' || is_rdrct(str, *i))))
     {
-        // printf("found char \"%c\" in %d and q = %d\n", str[*i], *i, q);
         q = quotes_counter_spcl(str, pvt, *i);
         if (is_merge_quotes(str, *i + 1, str[*i]))
         {
-            // printf("found a merge quotes\n");
-            // printf("check letter for is_merge_quotes if : \"%c\"     ------       i = %d\n", str[*i], *i);    
-            // printf("%d\n", (*i));
-            // printf("ZORTINGEN\n");
             (*i)++;
             word_passer(str, i);
         }
         *i += 1;
         if (str[*i] == '\0')
             return (1);
-        // printf("check letter for q : \"%c\"     ------       i = %d\n", str[*i], *i);
-        // printf("-*- q = %d -*-\n", q);
     }
-    // printf("quotes_passer: %c in %ld\n", str[*i], *i);
     return (1);
 }
 
