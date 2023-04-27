@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax_check.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/27 10:36:12 by aerbosna          #+#    #+#             */
+/*   Updated: 2023/04/27 10:36:13 by aerbosna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
 int	check_syntax_redir(char **linefornow)
 {
 	int	i;
@@ -17,17 +31,17 @@ int	check_syntax_builtin3(char **linefornow)
 		print_env();
 		return (0);
 	}
-	else if (i == 1 && ft_strncmp(linefornow[0], "unset", 5) == 0)
+	else if (ft_strncmp(linefornow[0], "unset", 5) == 0)
 	{
 		unset_env(linefornow);
 		return (0);
 	}
-	else if (i == 1 && ft_strncmp(linefornow[0], "export", 6) == 0)
+	else if (ft_strncmp(linefornow[0], "export", 6) == 0)
 	{
 		export_env(linefornow);
 		return (0);
 	}
-	else if (i == 1 && ft_strncmp(linefornow[0], "cd", 3) == 0)
+	else if (ft_strncmp(linefornow[0], "cd", 3) == 0)
 	{
 		change_directory(linefornow);
 		return (0);
