@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 21:34:31 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 00:49:40 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	execute(char *exec_name, char **args)
 		waitpid(pid, &wstatus, WUNTRACED);
 		if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
 			return (1);
+		printf("Process %s exited with status %d\n", exec_name, wstatus);
 	}
 	return (0);
 }

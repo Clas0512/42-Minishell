@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 23:33:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 23:56:29 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 02:02:31 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ void	pipe_execute(char **pipeargss)
 		}
 		args[end - start] = NULL;
 		pid = fork();
-		if (pid == 0)
+		if (pid < 0)
+			return ;
+		else if (pid == 0)
 			child_proc(args, pipes, pipe_idx, num_pipes);
 		else
 			parent_proc(pipes, pipe_idx, num_pipes, pid);
@@ -116,4 +118,5 @@ void	pipe_execute(char **pipeargss)
 			end = start;
 		pipe_idx++;
 	}
+	return ;
 }

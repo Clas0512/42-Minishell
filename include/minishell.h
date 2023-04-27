@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 03:56:41 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 23:51:18 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:32:34 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,11 @@ void	infile(char **args);
 void	outfile(char **args);
 void	append(char **args);
 void	heredoc(char **command, char *delimiter);
+
+//sytnax
+int	check_syntax_builtin(char **linefornow);
+int check_syntax_builtin2(char **linefornow);
+int check_syntax_builtin3(char **linefornow);
+int	check_syntax_redir(char **linefornow);
 
 #endif

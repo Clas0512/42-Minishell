@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/26 21:32:50 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:30:42 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,12 @@
 
 t_shell	g_shell;
 
-
 void	read_the_line(char *line, char **linefornow, int ac)
 {	
-	if (ft_strncmp(line, "exit", 4) == 0)
-		exit_minishell(linefornow);
-	else if (ft_strncmp(line, "clear", 5) == 0)
-		system("clear");
-	else if (ft_strncmp(line, "echo", 4) == 0
-		|| ft_strncmp(line, "ECHO", 4) == 0)
-		echo(ac, linefornow);
-	else if (ft_strncmp(line, "pwd", 3) == 0)
-		pwd();
-	else if (ft_strncmp(line, "env", 3) == 0 || ft_strncmp(line, "ENV", 3) == 0)
-		print_env();
-	else if (ft_strncmp(line, "unset", 5) == 0)
-		unset_env(linefornow);
-	else if (ft_strncmp(line, "export", 6) == 0)
-		export_env(linefornow);
-	else if (ft_strncmp(line, "cd", 2) == 0)
-		change_directory(linefornow);
+	if (check_syntax(linefornow) == 0)
+		printf("Syntax error near unexpected token\n");
+	else if (check_syntax_builtin(linefornow) == 0)
+		;
 	else if (redirection_exists(line) == 0)
 		redirection_redirector(linefornow);
  	else if (pipe_exists(line) > 0)
