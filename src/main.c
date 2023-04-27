@@ -3,23 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:40 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/28 00:12:17 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:31:53 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/* ************************************************************************** */
+/* 
+//add cwdr etc. to global variable for the aesthetics. (Done and Done)
+//FIX THE AESTHETICS OF THE EXIT COMMAND (done)
+// Echo Doesn't prints more than 2 words, i f-ed it up with removing ac, dear future me handle that plox.
+// 																			^^ ^ ^^ don't worry kiddo, i gotcha ;) <3
+//Add the other commands(done)
+//ADD PATH CONTROL TO EXECUTOR <---- DONE BABYBOY, LOVE YA */
 //FIX THE WILDCARDS IN MAKEFILE!!!!!!
+//FIX THE INFILE OUTCOME
 //Refactor
+//Add the bonus
+//CLEAN UP REDIRECTIONS
 //Add the leaks to collector
 //Check the norm
 //Check the leaks
 //Move the files to the right folders and change the makefile
-//collector, command, main norm is not fixed*/
-/* ************************************************************************** */
+// init_env is not working properly, order is changing while on a new prompt thats called with system call check why
+// system call fix the aesthetics, fixed the path for each computer, env order gets f-ed up when this works. 
+//Pipe has heap overflow, deal with it, refactor it, make it better, make it work, make it right. And don't forget the Norm <3
+//redirections, pipe collector, command, main norm is not fixed
+//make $?  
+//fix echo dsfgdfsg$PATHdfgsd
+//append & l"s" ''''-l | "w"c"
 
 t_shell	g_shell;
 
@@ -51,21 +65,26 @@ void	init_collection(void)
 {
 	init_env();
 	init_collector(&g_shell.collector);
+	init_commander(&g_shell.commander);
 	init_signal();
 }
 
-void	read_the_line(char *line, char **linefornow)
+
+
+void	read_the_line(char *line, char **linefornow) // satırr
 {	
 	if (linefornow[0] == NULL)
 		return ;
 	else if (check_syntax_redir(linefornow) == 0)
-		return ;
+		printf("%s Syntax error near unexpected token\n", g_shell.cwdr);
  	else if (linefornow[0][0] == '\0')
 	{
 		printf("%s Command not found:\n", g_shell.cwdr);
 		g_shell.exit_status = 127;
 	}
-	else if (check_exit_status(linefornow) == 0 || check_syntax_builtin(linefornow) == 0)
+	else if (check_exit_status(linefornow) == 0)
+		return ;
+	else if (check_syntax_builtin(linefornow) == 0)
 		return ;
 	else if (redirection_exists(line) == 0)
 		redirection_redirector(linefornow);
@@ -86,6 +105,7 @@ void	read_the_line(char *line, char **linefornow)
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
+	char	*tmp_line;
 	char	**linefornow;
 
 	// open_terminal(av[0]);
@@ -98,12 +118,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		g_shell.cwdr = ft_strjoin(getcwd(NULL, 0), " | minishell> ");
 		line = readline(g_shell.cwdr);
+		tmp_line = ft_strdup(line);
 		if (line == NULL)
 		{
 			printf("%s exit", g_shell.cwdr);
 			exit(0);
 		}
-		linefornow = lexer(line);
+		linefornow = lexer(tmp_line);
 		add_history(line);
 		read_the_line(line, linefornow);
 		free(line);

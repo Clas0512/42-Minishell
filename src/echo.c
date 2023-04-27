@@ -6,7 +6,7 @@
 /*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:20 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/27 23:12:52 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/26 09:45:59 by aerbosna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	env_checker(char *envname)
 				printf("%c", envtmp[i][j]);
 				j++;
 			}
-			printf(" ");
 			return (1);
 		}
 		i++;
@@ -78,10 +77,10 @@ int	echo_control(char *arg)
 			printf("$");
 			return (1);
 		}
+		else if (arg[i] == '$' && env_checker(arg) == 0)
+			return (1);
 		i++;
 	}
-	if (echo_mid_checker(arg) == 1)
-		return (1);
 	return (0);
 }
 
@@ -100,7 +99,7 @@ void	echo(int ac, char **av)
 		j = 0;
 		while (av[i] && av[i][j] != '\0')
 		{
-			if (echo_n_control(av[1]) == 1 && g_shell.echo_n == 1 && i == 1)
+			if (echo_n_control(av[1]) == 1 && g_shell.echo_n == 1)
 				break ;
 			else if (echo_control(av[i]) == 1)
 				break ;

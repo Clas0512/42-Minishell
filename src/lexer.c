@@ -52,12 +52,12 @@ void letter_manager(t_lex *info, char *str)
 	{
 		info->manager.r = 0;
 		info->manager.r = is_rdrct(str, info->manager.j);
-		if (str[info->manager.j] == 32) // boşlukları atlama
+		if (str[info->manager.j] == 32)
 			info->manager.j++;
-		else if (str[info->manager.j] == 34 || str[info->manager.j] == 39) // tırnak mı? Değil mi?
+		else if (str[info->manager.j] == 34 || str[info->manager.j] == 39)
 		{
-			info->manager.length += letter_counter_in_quotes(str, str[info->manager.j], &info->manager.j); // karakterleri sayma fonksiyonundan dönen değeri length değişkenine atma
-			if (is_word_final_quotes(str, info->manager.j)) // eğer kelime bittiyse mallocla yer açılcak
+			info->manager.length += letter_counter_in_quotes(str, str[info->manager.j], &info->manager.j);
+			if (is_word_final_quotes(str, info->manager.j))
 				helper(info, info->manager.r, 0);
 		} 
 		else if (info->manager.r != 0)
@@ -66,16 +66,10 @@ void letter_manager(t_lex *info, char *str)
 		{
 			info->manager.length++;
 			info->manager.j++;
-			if (is_word_final_basic(str, info->manager.j)) // eğer kelime bittiyse mallocla yer açılcak
-			{
-				// printf("SAD\n");
-				// printf("length: %d\n", info->manager.length);
+			if (is_word_final_basic(str, info->manager.j))
 				helper(info, info->manager.r, 0);
-				// printf("line : %p cw: %d\n", line[info->manager.current_wc], info->manager.current_wc);
-			}
 		}
 	}
-	// printf("-*- %p -*-\n", *line);
 }
 
 void	helper(t_lex *info, int r, char mod)

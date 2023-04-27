@@ -42,7 +42,7 @@ int word_control_1(t_lex *info, int i)
 
 int word_passer(char *str, int *i)
 {
-    while (str[*i + 1] != '\0' && str[*i + 1] != 32 && is_rdrct(str, *i + 1) == 0)
+    while (str[*i + 1] != '\0' && str[*i + 1] != 32 && is_rdrct(str, *i + 1 ) == 0)
         (*i)++;
     return (1);
 }

@@ -44,17 +44,13 @@ int  setter_rdirectn(t_lex *info, char *str, char *line)
 
 int  setter_in_word(t_lex *info, char *str, char *line)
 {
-	// printf("line char : \"%d\"\n", ft_strlen(&line[info->ln->b]));
 	while (str[info->a] != 32 && str[info->a] != 0 && is_rdrct(str, info->a) == 0 &&
 			str[info->a] != 39 && str[info->a] != 34)
 	{
-		// printf("str char : \"%c\"\n", str[info->a]);
 		line[info->b] = str[info->a];
-		// printf("new line char : \"%c\"\n\n", line[info->b]);
 		info->b += 1;
 		info->a += 1;
 	}
-	// printf("strlength of line : %zu  -*-*- str is : \"%s\" \n", ft_strlen(line), line);
 	if (str[info->a] != 32 && str[info->a] != 0 && is_rdrct(str, info->a) == 0)
 		return (0);
 	return (1);
@@ -85,6 +81,7 @@ void    set_line(t_lex *info, char *str, char **line)
 		}
 		else if (32 < str[info->a] && str[info->a] < 127)
 		{
+			// printf("%p\n", line[wd]);
 			wd += setter_in_word(info, str, line[wd]);
 			if (wd_past != wd)
 				tokenize_q_str(info, wd_past, 'C');

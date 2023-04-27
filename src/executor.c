@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aerbosna <aerbosna@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: anargul <anargul@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:33:36 by aerbosna          #+#    #+#             */
-/*   Updated: 2023/04/28 00:43:47 by aerbosna         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:30:48 by anargul          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char	**combine_path_and_args(char *full_path_to_exec, char **args)
 	i = 0;
 	j = (ft_strlen(full_path_to_exec) + ft_strlen(args[0]) + 1);
 	path_and_args = malloc(sizeof(char *) * j);
-	create_collection(path_and_args);
 	path_and_args[i] = ft_strdup(full_path_to_exec);
 	i++;
 	while (args[i])
@@ -95,13 +94,13 @@ char	**combine_path_and_args(char *full_path_to_exec, char **args)
 
 int	execute(char *exec_name, char **args)
 {
-	pid_t	pid2;
+	pid_t	pid;
 	int		wstatus;
 	char	**path_and_args;
 
 	path_and_args = combine_path_and_args(return_exec_path(exec_name), args);
-	pid2 = fork();
-	if (pid2 == 0)
+	pid = fork();
+	if (pid == 0)
 	{
 		if (execve(return_exec_path(exec_name), path_and_args, NULL) == -1)
 		{
@@ -110,11 +109,11 @@ int	execute(char *exec_name, char **args)
 		}
 		exit(EXIT_FAILURE);
 	}
-	else if (pid2 < 0)
-		perror("Child Process Failed.\n");
+	else if (pid < 0)
+		perror("Child Process Failed.");
 	else
 	{
-		waitpid(pid2, &wstatus, WUNTRACED);
+		waitpid(pid, &wstatus, WUNTRACED);
 		if (WIFEXITED(wstatus) && WIFSIGNALED(wstatus))
 			return (1);
 		g_shell.exit_status = wstatus;
